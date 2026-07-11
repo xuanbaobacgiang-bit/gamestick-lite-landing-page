@@ -8,7 +8,7 @@ Repo hoàn toàn độc lập, clone bố cục từ `hezheng-landing-page` (đ�
 - **Khách hàng:** Đại An (cùng khách với `hezheng-landing-page`, `daianostmars-landing-page` — máy làm sữa hạt OSTMARS).
 - **Sản phẩm:** Game Stick Lite — máy chơi game retro cắm HDMI kèm 2 tay cầm không dây 2.4G. Khách hàng khẳng định đây là **hàng nhập loại xịn, chất lượng cao** — không phải hàng trôi nổi kém chất lượng thường thấy trên thị trường (nhiều review tiêu cực về dòng sản phẩm này trên TikTok Shop quốc tế là do các seller khác bán hàng kém chất lượng). Nội dung landing page vì vậy nhấn mạnh USP "คุณภาพสูง / นำเข้าคัดสรรพิเศษ" thay vì phòng thủ về lỗi/rủi ro.
 - **GitHub:** `github.com/xuanbaobacgiang-bit/gamestick-lite-landing-page` (private) — tài khoản `xuanbaobacgiang-bit`.
-- **Vercel:** ⏳ CHƯA connect (theo yêu cầu — chỉ tạo file, commit, push GitHub trước).
+- **Vercel:** ✅ đã connect dưới team `xuanbaobacgiang` (đúng tác giả `xuanbaobacgiang-bit`), auto-deploy khi push `main`. Domain: `https://gamestick-lite-landing-page.vercel.app`.
 - **Ngôn ngữ trang:** Tiếng Thái.
 
 ## Chạy local
@@ -66,11 +66,11 @@ Thái Lan (+7) bất kể timezone mặc định của Apps Script project.
 
 ## Việc còn thiếu trước khi chạy quảng cáo thật
 
-1. **Connect Vercel** — repo chưa được connect để auto-deploy (theo yêu cầu, chưa cần làm ngay).
-2. Cân nhắc tách fanpage Facebook riêng nếu muốn tách hẳn khỏi các sản phẩm khác của Đại An (hiện đã
+1. Cân nhắc tách fanpage Facebook riêng nếu muốn tách hẳn khỏi các sản phẩm khác của Đại An (hiện đã
    dùng page riêng `61591467853514`, chỉ chung Pixel ID với HEZHENG/OSTMARS).
 
-✅ Đã xong: 21 ảnh thật đã gắn đúng vị trí, premium proof-slider (5 ảnh khách hàng thật), QA toàn diện
-qua preview browser (spacing, zoom ảnh, form validate, popup submit, FAQ, filter, slider — tất cả hoạt
-động đúng, không lỗi console, không tràn màn hình, không ảnh vỡ), webhook Apps Script đã deploy và
-test gửi đơn thật thành công (đã xoá dữ liệu test khỏi Sheet).
+✅ Đã xong toàn bộ: 21 ảnh thật đã gắn đúng vị trí, premium proof-slider (5 ảnh khách hàng thật), QA
+toàn diện qua preview browser (spacing, zoom ảnh, form validate, popup submit, FAQ, filter, slider —
+tất cả hoạt động đúng, không lỗi console, không tràn màn hình, không ảnh vỡ), webhook Apps Script đã
+deploy và test gửi đơn thật thành công, Vercel đã connect và live tại
+`https://gamestick-lite-landing-page.vercel.app`. Landing page sẵn sàng chạy quảng cáo thật.
