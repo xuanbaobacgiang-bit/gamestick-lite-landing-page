@@ -39,7 +39,7 @@ Single file: `index.html`, clone bố cục từ `hezheng-landing-page` (giữ n
 | Giá | 999 ฿ (giá gốc 1,699 ฿) — chỉ 1 mức giá, không có combo |
 | Sự kiện Pixel | `PageView`, `ViewContent` (load trang), `InitiateCheckout` (bấm mua), `CompleteRegistration` (đặt hàng thành công) |
 | Google Sheet nhận đơn | `12NQHsLfe8MD47FK1dUVm0gxuyvOk6JA7DbR9LxRPb8Y` ("Đại An - Thailand") → tab **"Máy chơi game"** — 8 cột: Thời gian, Tên Khách, Số điện thoại, Địa chỉ, Lựa chọn của khách, Link landing page, Ghi chú, Nguồn chiến dịch. Thời gian ghi theo giờ Thái Lan (Asia/Bangkok, +7). |
-| webhookUrl (nhận đơn) | ⏳ PLACEHOLDER — đang để `null` trong `index.html`. Xem mục "Việc còn thiếu". |
+| webhookUrl (nhận đơn) | ✅ ĐÃ DEPLOY — Apps Script project riêng, độc lập "Game Stick Lite Thailand orders" (script ID `1W-R2neRzMKmvKs7tEk8SHMclfPRgSb_ZMvRPs2mJ-24WNr_wA6xQHRmm`). URL: `https://script.google.com/macros/s/AKfycby0_F-nLlLnwRPocnAIx3EHyNT_Zx2PHACGKpIxVraJpQGe5FLCUUuZd1ECIwk-SSZy/exec`. Đã test gửi đơn thật, ghi đúng 8 cột, đúng giờ Thái Lan. |
 
 ## Workflow sửa và deploy
 
@@ -66,13 +66,11 @@ Thái Lan (+7) bất kể timezone mặc định của Apps Script project.
 
 ## Việc còn thiếu trước khi chạy quảng cáo thật
 
-1. **Deploy webhook Apps Script** — mở Google Sheet → Extensions → Apps Script → dán `apps-script.gs`
-   → chạy `setupHeaders` 1 lần → Deploy → Web app (Anyone can access) → copy URL `/exec` → dán vào
-   `webhookUrl` trong `index.html` (đang để `null`).
-2. **Connect Vercel** — repo chưa được connect để auto-deploy (theo yêu cầu, chưa cần làm ngay).
-3. Cân nhắc tách fanpage Facebook riêng nếu muốn tách hẳn khỏi các sản phẩm khác của Đại An (hiện đã
+1. **Connect Vercel** — repo chưa được connect để auto-deploy (theo yêu cầu, chưa cần làm ngay).
+2. Cân nhắc tách fanpage Facebook riêng nếu muốn tách hẳn khỏi các sản phẩm khác của Đại An (hiện đã
    dùng page riêng `61591467853514`, chỉ chung Pixel ID với HEZHENG/OSTMARS).
 
 ✅ Đã xong: 21 ảnh thật đã gắn đúng vị trí, premium proof-slider (5 ảnh khách hàng thật), QA toàn diện
 qua preview browser (spacing, zoom ảnh, form validate, popup submit, FAQ, filter, slider — tất cả hoạt
-động đúng, không lỗi console, không tràn màn hình, không ảnh vỡ).
+động đúng, không lỗi console, không tràn màn hình, không ảnh vỡ), webhook Apps Script đã deploy và
+test gửi đơn thật thành công (đã xoá dữ liệu test khỏi Sheet).
