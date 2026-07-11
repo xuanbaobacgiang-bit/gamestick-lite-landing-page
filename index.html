@@ -25,10 +25,9 @@
   5 ảnh lifestyle dùng trong slider cao cấp (crossfade, không phải gallery
   scroll-snap thường) ở section "เล่นสนุกได้ทุกสถานการณ์".
 
-  PLACEHOLDER còn lại cần xác nhận trước khi deploy — grep "PLACEHOLDER":
-    1. webhookUrl đang để null. Cần tạo tab "Máy chơi game" trong sheet
-       "Đại An - Thailand" (12NQHsLfe8MD47FK1dUVm0gxuyvOk6JA7DbR9LxRPb8Y)
-       + deploy apps-script.gs thành Web App rồi dán URL /exec vào đây.
+  Webhook đã deploy và test thành công (Apps Script project riêng, độc lập
+  "Game Stick Lite Thailand orders") — ghi vào tab "Máy chơi game" trong
+  sheet "Đại An - Thailand". Chỉ còn thiếu connect Vercel.
   ============================================================
 -->
 
@@ -1647,10 +1646,10 @@ function reinitPixelMatching() {
  * Buy Popup config + Buy CTA handler
  * ============================================================ */
 TikTokShopBuyPopup.config({
-  /* PLACEHOLDER — chưa deploy. Cần tạo tab "Máy chơi game" trong sheet
-     "Đại An - Thailand" + deploy apps-script.gs thành Web App rồi dán
-     URL /exec vào đây. Xem CLAUDE.md mục "Việc còn thiếu". */
-  webhookUrl: null,
+  /* Webhook đã deploy — Apps Script project riêng, độc lập cho Game Stick Lite
+     (project "Game Stick Lite Thailand orders"). Ghi vào tab "Máy chơi game"
+     trong sheet "Đại An - Thailand". */
+  webhookUrl: 'https://script.google.com/macros/s/AKfycby0_F-nLlLnwRPocnAIx3EHyNT_Zx2PHACGKpIxVraJpQGe5FLCUUuZd1ECIwk-SSZy/exec',
   currency:   'THB',
   onSuccess: function(orderCode, payload){
     console.log('Order placed:', orderCode);
