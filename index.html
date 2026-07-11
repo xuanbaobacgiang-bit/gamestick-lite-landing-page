@@ -20,13 +20,15 @@
 
   Chỉ bán 1 mức giá: 999 ฿ (giá gốc 1,699 ฿) — không có combo nhiều gói.
 
-  PLACEHOLDER cần xác nhận trước khi deploy — grep "PLACEHOLDER" để tìm nhanh:
+  Ảnh: 21 ảnh thật do khách cung cấp (16 banner marketing có sẵn chữ Thái +
+  5 ảnh khách hàng thật đang chơi) — assets/images/*.jpg, đã nén JPEG q82.
+  5 ảnh lifestyle dùng trong slider cao cấp (crossfade, không phải gallery
+  scroll-snap thường) ở section "เล่นสนุกได้ทุกสถานการณ์".
+
+  PLACEHOLDER còn lại cần xác nhận trước khi deploy — grep "PLACEHOLDER":
     1. webhookUrl đang để null. Cần tạo tab "Máy chơi game" trong sheet
        "Đại An - Thailand" (12NQHsLfe8MD47FK1dUVm0gxuyvOk6JA7DbR9LxRPb8Y)
        + deploy apps-script.gs thành Web App rồi dán URL /exec vào đây.
-    2. Toàn bộ ảnh đang dùng placehold.co tạm thời (theo yêu cầu khách —
-       "ảnh có thể sử dụng tạm ảnh khác, sẽ cập nhật sau"). Cần thay bằng
-       ảnh thật khi có, giữ nguyên đường dẫn CDN (không dùng path local).
   ============================================================
 -->
 
@@ -343,18 +345,39 @@ a { color: inherit; text-decoration: none; }
 .tm-compare-cell.gold { color: var(--tm-text); font-weight: 600; background: rgba(22,193,114,0.07); }
 .tm-compare-cell.gold svg { width: 13px; height: 13px; color: var(--tm-gold-dark); flex-shrink: 0; }
 
-/* Lifestyle proof gallery (dùng đâu cũng được) */
-.tm-retail-scroll {
-  display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory;
-  padding-bottom: 4px; scrollbar-width: none;
+/* Premium proof slider — crossfade + scale, khác hẳn kiểu scroll-snap gallery thông thường */
+.tm-proof-slider {
+  position: relative; aspect-ratio: 4/5; border-radius: var(--tm-r-lg); overflow: hidden;
+  box-shadow: var(--tm-shadow-md); border: 1px solid var(--tm-border-soft); background: var(--tm-charcoal);
+  touch-action: pan-y;
 }
-.tm-retail-scroll::-webkit-scrollbar { display: none; }
-.tm-retail-card {
-  position: relative; flex: 0 0 62%; scroll-snap-align: start;
-  aspect-ratio: 1/1; border-radius: var(--tm-r-lg); overflow: hidden;
-  box-shadow: var(--tm-shadow-md); cursor: zoom-in;
+.tm-proof-slide {
+  position: absolute; inset: 0; opacity: 0; transform: scale(1.045); pointer-events: none;
+  transition: opacity 0.7s ease, transform 1.2s ease;
 }
-.tm-retail-card img { width: 100%; height: 100%; object-fit: cover; }
+.tm-proof-slide.active { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 1; }
+.tm-proof-slide img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; }
+.tm-proof-caption {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 36px 16px 16px;
+  background: linear-gradient(180deg, transparent 0%, rgba(6,12,9,0.8) 100%);
+  color: #fff; font-size: 15.5px; font-weight: 600; display: flex; align-items: center; gap: 8px; z-index: 2;
+  pointer-events: none;
+}
+.tm-proof-badge {
+  display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px;
+  background: rgba(22,193,114,0.92); border-radius: var(--tm-r-pill);
+  font-size: 12px; font-weight: 800; letter-spacing: 0.3px; flex-shrink: 0;
+}
+.tm-proof-arrow {
+  position: absolute; top: 50%; transform: translateY(-50%); width: 38px; height: 38px; border-radius: 50%;
+  background: rgba(8,14,10,0.42); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; z-index: 3;
+  color: #fff;
+}
+.tm-proof-arrow.prev { left: 10px; } .tm-proof-arrow.next { right: 10px; }
+.tm-proof-arrow svg { width: 19px; height: 19px; }
+.tm-proof-dots { display: flex; justify-content: center; gap: 7px; margin-top: 14px; }
+.tm-proof-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--tm-border); transition: background 0.25s, width 0.25s; flex-shrink: 0; }
+.tm-proof-dot.active { width: 22px; border-radius: var(--tm-r-pill); background: var(--tm-gold); }
 
 /* Khối giá — hiển thị 1 mức giá duy nhất (không có combo nhiều gói) */
 .tm-cfg-display {
@@ -501,7 +524,7 @@ a { color: inherit; text-decoration: none; }
 .tts-popup-overlay.open .tts-popup { transform: translateY(0); }
 @media (min-width: 768px) { .tts-popup-overlay { align-items: center; } .tts-popup { border-radius: var(--tm-r-xl); max-height: 80vh; } }
 .tts-popup-header { display: flex; gap: 12px; padding: 16px; border-bottom: 1px solid var(--tm-border-soft); }
-.tts-popup-img { width: 78px; height: 78px; border-radius: var(--tm-r-md); object-fit: cover; flex-shrink: 0; background: var(--tm-cream); border: 1px solid var(--tm-border-soft); }
+.tts-popup-img { width: 78px; height: 78px; border-radius: var(--tm-r-md); object-fit: cover; object-position: center 68%; flex-shrink: 0; background: var(--tm-cream); border: 1px solid var(--tm-border-soft); }
 .tts-popup-info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
 .tts-popup-price { font-size: 24px; font-weight: 800; color: var(--tm-gold-dark); line-height: 1.2; }
 .tts-popup-price-old { font-size: 15px; color: var(--tm-text-muted); text-decoration: line-through; margin-top: 2px; }
@@ -580,7 +603,7 @@ a { color: inherit; text-decoration: none; }
   <section id="tongquan">
     <!-- Hero — 1 ảnh full-bleed, tiêu đề + giá lồng trên ảnh -->
     <div class="tm-hero-full">
-      <img src="https://placehold.co/1080x1080/0A1410/6EE7A8?font=roboto&text=Game%20Stick%20Lite%0AHero%20Image" alt="Game Stick Lite เครื่องเล่นเกมย้อนยุค เสียบ HDMI พร้อมจอยไร้สาย 2 อัน">
+      <img src="./assets/images/hero.jpg" alt="Game Stick Lite เครื่องเล่นเกมย้อนยุค เสียบ HDMI พร้อมจอยไร้สาย 2 อัน">
       <span class="tm-hero-eyebrow">GAME STICK LITE · เล่นเกมย้อนยุคได้ทุกวัน</span>
     </div>
 
@@ -623,7 +646,7 @@ a { color: inherit; text-decoration: none; }
       </button>
     </div>
     <div style="padding:0 16px 20px; background:var(--tm-cream);">
-      <div class="tm-img-wrap" style="margin-bottom:0;"><img src="https://placehold.co/1080x1080/F2F8F4/0E9257?font=roboto&text=Full%20Set%0AGame%20Stick%20Lite%20%2B%20%E0%B8%88%E0%B8%AD%E0%B8%A2%202%20%E0%B8%AD%E0%B8%B1%E0%B8%99" alt="Game Stick Lite พร้อมจอยไร้สาย 2 อัน — ครบเซ็ตพร้อมเล่น"></div>
+      <div class="tm-img-wrap" style="margin-bottom:0;"><img src="./assets/images/full-set.jpg" alt="Game Stick Lite พร้อมจอยไร้สาย 2 อัน — ครบเซ็ตพร้อมเล่น"></div>
     </div>
   </section>
 
@@ -644,7 +667,7 @@ a { color: inherit; text-decoration: none; }
         <div class="tm-pain-chip">ต่อสายติดตั้งเครื่องเกมยุ่งยาก เสียเวลานาน</div>
       </div>
       <div class="tm-img-wrap">
-        <img src="https://placehold.co/1080x1080/F2F8F4/0E9257?font=roboto&text=Pain%20Point%0A%E0%B8%9B%E0%B8%B1%E0%B8%8D%E0%B8%AB%E0%B8%B2%E0%B8%97%E0%B8%B5%E0%B9%88%E0%B8%9E%E0%B8%9A%E0%B8%9A%E0%B9%88%E0%B8%AD%E0%B8%A2" alt="ปัญหาที่พบบ่อยเรื่องเครื่องเล่นเกมย้อนยุค — Game Stick Lite ช่วยแก้ทั้ง 5 ปัญหา">
+        <img src="./assets/images/plug-play.jpg" alt="เสียบทีวีแล้วเล่นได้เลย — Game Stick Lite ตอบโจทย์ทุกปัญหาข้างต้น">
       </div>
     </div>
 
@@ -653,6 +676,7 @@ a { color: inherit; text-decoration: none; }
       <div class="tm-section-eyebrow">ประโยชน์</div>
       <h2 class="tm-section-title">Game Stick Lite ให้อะไรกับคุณบ้าง?</h2>
       <p class="tm-section-sub">4 ประโยชน์หลักที่ได้รับทันทีตั้งแต่เสียบเครื่อง</p>
+      <div class="tm-img-wrap"><img src="./assets/images/family-fun.jpg" alt="สนุกด้วยกันได้ทั้งบ้าน — เกมคลาสสิกที่ชวนทุกคนมาร่วมเล่น"></div>
       <div class="tm-benefit-list">
         <div class="tm-benefit-row">
           <div class="tm-benefit-title">เสียบปุ๊บเล่นปั๊บ ไม่ต้องติดตั้งอะไรเพิ่ม</div>
@@ -671,13 +695,14 @@ a { color: inherit; text-decoration: none; }
           <div class="tm-benefit-desc"><b>ขนาดเล็กพกพาง่าย</b> เสียบได้ทั้งที่บ้าน บ้านญาติ หรือพกไปเที่ยว</div>
         </div>
       </div>
+      <div class="tm-img-wrap" style="margin-top:18px; margin-bottom:0;"><img src="./assets/images/two-player.jpg" alt="เล่น 2 คน ยิ่งสนุกกว่า — เหมาะกับเพื่อน คู่รัก และครอบครัว"></div>
     </div>
 
     <div class="tm-section tm-reveal">
       <div class="tm-section-eyebrow">เทคโนโลยีเด่น</div>
       <h2 class="tm-section-title">4 เทคโนโลยีหลักของ Game Stick Lite</h2>
       <p class="tm-section-sub">ออกแบบมาเพื่อประสบการณ์เล่นเกมย้อนยุคที่ลื่นไหลที่สุด</p>
-      <div class="tm-img-wrap"><img src="https://placehold.co/1080x1080/F2F8F4/0E9257?font=roboto&text=4%20%E0%B9%80%E0%B8%97%E0%B8%84%E0%B9%82%E0%B8%99%E0%B9%82%E0%B8%A5%E0%B8%A2%E0%B8%B5%E0%B9%80%E0%B8%94%E0%B9%88%E0%B8%99" alt="Game Stick Lite — ชิปประมวลผล จอยไร้สาย ความละเอียด HDMI 4K เกมในตัวหลายพันเกม"></div>
+      <div class="tm-img-wrap"><img src="./assets/images/features-5.jpg" alt="Game Stick Lite — ชิปประมวลผล จอยไร้สาย ความละเอียด HDMI 4K เกมในตัวหลายพันเกม"></div>
       <div class="tm-ing-list">
         <div class="tm-ing-row">
           <span class="tm-ing-num">01</span>
@@ -696,13 +721,14 @@ a { color: inherit; text-decoration: none; }
           <div><div class="tm-feat-name">รวมเกมคลาสสิกในตัวหลายพันเกม</div><div class="tm-feat-desc">พร้อมเล่นทันทีโดยไม่ต้องดาวน์โหลดเพิ่ม</div></div>
         </div>
       </div>
+      <div class="tm-img-wrap" style="margin-top:18px; margin-bottom:0;"><img src="./assets/images/real-gameplay.jpg" alt="ภาพเกมขึ้นจริง เล่นได้จริง — สัมผัสความสนุกแบบเกมคลาสสิกบนจอใหญ่"></div>
     </div>
 
     <div class="tm-section alt tm-reveal">
       <div class="tm-section-eyebrow">เจาะลึกคุณภาพ</div>
       <h2 class="tm-section-title">ออกแบบคัดสรรวัสดุคุณภาพสูงจากภายใน</h2>
       <p class="tm-section-sub">นำเข้าคัดสรรพิเศษ ชิ้นส่วนภายในแข็งแรง ทนทาน ใช้งานได้ยาวนาน</p>
-      <div class="tm-img-wrap"><img src="https://placehold.co/1080x1080/F2F8F4/0E9257?font=roboto&text=%E0%B9%82%E0%B8%84%E0%B8%A3%E0%B8%87%E0%B8%AA%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%87%E0%B8%A0%E0%B8%B2%E0%B8%A2%E0%B9%83%E0%B8%99%0A%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%AA%E0%B8%B9%E0%B8%87" alt="โครงสร้างภายใน Game Stick Lite — ชิ้นส่วนคัดสรรคุณภาพสูง"></div>
+      <div class="tm-img-wrap"><img src="./assets/images/ports-detail.jpg" alt="พอร์ตเชื่อมต่อ Game Stick Lite — HDMI แข็งแรง คัดสรรคุณภาพสูง"></div>
       <div class="tm-ing-list">
         <div class="tm-ing-row">
           <span class="tm-ing-num">01</span>
@@ -727,7 +753,7 @@ a { color: inherit; text-decoration: none; }
       <div class="tm-section-eyebrow">สัมผัสการใช้งาน</div>
       <h2 class="tm-section-title">จอยคุณภาพสูง จับถนัดมือ เล่นได้นานไม่เมื่อย</h2>
       <p class="tm-section-sub">ออกแบบตามหลักสรีระ ปุ่มกดตอบสนองไว แม่นยำทุกจังหวะ</p>
-      <div class="tm-img-wrap"><img src="https://placehold.co/1080x1080/F2F8F4/0E9257?font=roboto&text=%E0%B8%88%E0%B8%AD%E0%B8%A2%E0%B9%84%E0%B8%A3%E0%B9%89%E0%B8%AA%E0%B8%B2%E0%B8%A2%0A%E0%B8%84%E0%B8%B8%E0%B8%93%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%AA%E0%B8%B9%E0%B8%87" alt="จอยไร้สาย Game Stick Lite คุณภาพสูง จับถนัดมือ"></div>
+      <div class="tm-img-wrap"><img src="./assets/images/controller-grip.jpg" alt="จอยไร้สาย Game Stick Lite คุณภาพสูง จับถนัดมือ"></div>
       <div class="tm-spec-inline">
         <span class="tm-spec-inline-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>จอยไร้สาย 2.4G</span>
         <span class="tm-spec-inline-dot">◆</span>
@@ -740,16 +766,20 @@ a { color: inherit; text-decoration: none; }
     </div>
 
     <div class="tm-section alt tm-reveal">
-      <div class="tm-section-eyebrow">ใช้ได้ทุกที่</div>
+      <div class="tm-section-eyebrow">ลูกค้าจริงใช้งานจริง</div>
       <h2 class="tm-section-title">เล่นสนุกได้ทุกสถานการณ์</h2>
-      <p class="tm-section-sub">พกพาง่าย น้ำหนักเบา เสียบได้ทุกที่ที่มีทีวี</p>
-      <div class="tm-retail-scroll">
-        <div class="tm-img-wrap tm-retail-card" style="margin-bottom:0;"><img src="https://placehold.co/900x900/0E9257/FFFFFF?font=roboto&text=%E0%B9%80%E0%B8%A5%E0%B9%88%E0%B8%99%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%84%E0%B8%A3%E0%B8%AD%E0%B8%9A%E0%B8%84%E0%B8%A3%E0%B8%B1%E0%B8%A7" alt="เล่น Game Stick Lite กับครอบครัวที่บ้าน"></div>
-        <div class="tm-img-wrap tm-retail-card" style="margin-bottom:0;"><img src="https://placehold.co/900x900/0E9257/FFFFFF?font=roboto&text=%E0%B9%80%E0%B8%A5%E0%B9%88%E0%B8%99%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B9%80%E0%B8%9E%E0%B8%B7%E0%B9%88%E0%B8%AD%E0%B8%99" alt="เล่น Game Stick Lite กับเพื่อนสนิท"></div>
-        <div class="tm-img-wrap tm-retail-card" style="margin-bottom:0;"><img src="https://placehold.co/900x900/0E9257/FFFFFF?font=roboto&text=%E0%B9%80%E0%B8%A5%E0%B9%88%E0%B8%99%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%A5%E0%B8%B9%E0%B8%81%E0%B9%86" alt="เล่น Game Stick Lite กับลูกๆ ในบ้าน"></div>
-        <div class="tm-img-wrap tm-retail-card" style="margin-bottom:0;"><img src="https://placehold.co/900x900/0E9257/FFFFFF?font=roboto&text=%E0%B8%9E%E0%B8%81%E0%B8%9E%E0%B8%B2%E0%B9%84%E0%B8%9B%E0%B9%80%E0%B8%A5%E0%B9%88%E0%B8%99%E0%B8%99%E0%B8%AD%E0%B8%81%E0%B8%9A%E0%B9%89%E0%B8%B2%E0%B8%99" alt="พก Game Stick Lite ไปเล่นนอกบ้าน"></div>
-        <div class="tm-img-wrap tm-retail-card" style="margin-bottom:0;"><img src="https://placehold.co/900x900/0E9257/FFFFFF?font=roboto&text=%E0%B9%80%E0%B8%A5%E0%B9%88%E0%B8%99%E0%B9%83%E0%B8%99%E0%B8%AB%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%99%E0%B8%B1%E0%B9%88%E0%B8%87%E0%B9%80%E0%B8%A5%E0%B9%88%E0%B8%99" alt="เล่น Game Stick Lite ในห้องนั่งเล่น"></div>
+      <p class="tm-section-sub">ภาพจากลูกค้าจริงที่ซื้อไปใช้งาน ไม่ใช่ภาพโปรโมชั่น</p>
+      <div class="tm-proof-slider" id="tm-proof-slider">
+        <div class="tm-proof-slide active"><img src="./assets/images/lifestyle-1.jpg" alt="พี่น้องนอนเล่นเกมฟุตบอลด้วยกันวันหยุด — ลูกค้าจริง"></div>
+        <div class="tm-proof-slide"><img src="./assets/images/lifestyle-2.jpg" alt="คุณพ่อและลูกชายเล่นเกมต่อสู้ด้วยกันในห้องนั่งเล่น — ลูกค้าจริง"></div>
+        <div class="tm-proof-slide"><img src="./assets/images/lifestyle-3.jpg" alt="พี่น้องเล่นเกมคลาสสิกด้วยกันที่บ้าน — ลูกค้าจริง"></div>
+        <div class="tm-proof-slide"><img src="./assets/images/lifestyle-4.jpg" alt="เพื่อนๆ มารวมตัวเล่นเกมต่อสู้ด้วยกัน — ลูกค้าจริง"></div>
+        <div class="tm-proof-slide"><img src="./assets/images/lifestyle-5.jpg" alt="คุณพ่อและลูกชายเล่น Game Stick Lite ด้วยกัน — ลูกค้าจริง"></div>
+        <button class="tm-proof-arrow prev" type="button" aria-label="ภาพก่อนหน้า"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="tm-proof-arrow next" type="button" aria-label="ภาพถัดไป"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+        <div class="tm-proof-caption"><span class="tm-proof-badge">ลูกค้าจริง</span><span id="tm-proof-caption-text">พี่น้องนอนเล่นเกมฟุตบอลด้วยกันวันหยุด</span></div>
       </div>
+      <div class="tm-proof-dots" id="tm-proof-dots"></div>
     </div>
 
     <!-- Ưu điểm — bảng so sánh 2 cột -->
@@ -779,6 +809,7 @@ a { color: inherit; text-decoration: none; }
           <div class="tm-compare-cell gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>วัสดุคุณภาพสูง นำเข้าคัดสรรพิเศษ ทนทาน</div>
         </div>
       </div>
+      <div class="tm-img-wrap" style="margin-top:18px; margin-bottom:0;"><img src="./assets/images/games-variety.jpg" alt="เกมหลากหลาย เล่นสนุกไม่เบื่อ — รวมสไตล์เกมคลาสสิกไว้ในเครื่องเดียว"></div>
     </div>
 
   </section>
@@ -793,7 +824,7 @@ a { color: inherit; text-decoration: none; }
       <h2 class="tm-section-title">ก่อน &amp; หลัง มี Game Stick Lite</h2>
       <p class="tm-section-sub">จากบ้านเงียบเหงา สู่เสียงหัวเราะเต็มบ้านตั้งแต่เสียบเครื่องแรก</p>
       <div class="tm-img-wrap">
-        <img src="https://placehold.co/1080x1080/F2F8F4/0E9257?font=roboto&text=%E0%B8%81%E0%B9%88%E0%B8%AD%E0%B8%99%20%26%20%E0%B8%AB%E0%B8%A5%E0%B8%B1%E0%B8%87%0A%E0%B8%A1%E0%B8%B5%20Game%20Stick%20Lite" alt="เปรียบเทียบก่อนและหลังมี Game Stick Lite — ก่อนบ้านเงียบเหงา หลังสนุกทั้งครอบครัว">
+        <img src="./assets/images/before-after.jpg" alt="เปรียบเทียบก่อนและหลังมี Game Stick Lite — ความทรงจำเดิมในรูปแบบที่ง่ายกว่า">
       </div>
     </div>
 
@@ -813,21 +844,23 @@ a { color: inherit; text-decoration: none; }
 
     <div class="tm-section tm-reveal">
       <div class="tm-section-eyebrow">วิธีใช้งาน</div>
-      <h2 class="tm-section-title">ใช้งานง่ายเพียง 4 ขั้นตอน</h2>
-      <p class="tm-section-sub">ไม่ต้องติดตั้งซับซ้อน เสียบปุ๊บเล่นได้ทันที</p>
-      <div class="tm-img-wrap"><img src="https://placehold.co/1080x1080/F2F8F4/0E9257?font=roboto&text=%E0%B8%A7%E0%B8%B4%E0%B8%98%E0%B8%B5%E0%B9%83%E0%B8%8A%E0%B9%89%E0%B8%87%E0%B8%B2%E0%B8%99%204%20%E0%B8%82%E0%B8%B1%E0%B9%89%E0%B8%99%E0%B8%95%E0%B8%AD%E0%B8%99" alt="วิธีใช้งาน Game Stick Lite 4 ขั้นตอน"></div>
+      <h2 class="tm-section-title">เริ่มเล่นง่ายใน 3 ขั้นตอน</h2>
+      <p class="tm-section-sub">ไม่ต้องเก่งเทคโนโลยีก็ใช้งานได้ เสียบปุ๊บเล่นได้ทันที</p>
+      <div class="tm-img-wrap"><img src="./assets/images/usage-steps.jpg" alt="เริ่มเล่นง่ายใน 3 ขั้นตอน — เสียบเข้าทีวี เปิดจอยเชื่อมต่อ เริ่มเล่นทันที"></div>
       <div class="tm-steps">
         <div class="tm-step"><span class="tm-step-num">1</span><div><div class="tm-step-name">เสียบเครื่องเข้าช่อง HDMI ของทีวี</div><div class="tm-step-desc">รองรับทีวีทุกรุ่นที่มีช่อง HDMI</div></div></div>
-        <div class="tm-step"><span class="tm-step-num">2</span><div><div class="tm-step-name">เปิดทีวี เลือกช่องสัญญาณ HDMI ที่เสียบไว้</div><div class="tm-step-desc">หน้าจอเมนูเกมจะขึ้นให้เลือกทันที</div></div></div>
-        <div class="tm-step hl"><span class="tm-step-num">3</span><div><div class="tm-step-name">✦ เชื่อมต่อจอยไร้สาย 2 อัน</div><div class="tm-step-desc">เชื่อมต่ออัตโนมัติ ไม่ต้องตั้งค่าเพิ่ม</div></div></div>
-        <div class="tm-step"><span class="tm-step-num">4</span><div><div class="tm-step-name">เลือกเกมที่ต้องการแล้วเริ่มเล่นได้ทันที</div><div class="tm-step-desc">เล่นได้ทั้งคนเดียวและเล่นคู่ 2 คน</div></div></div>
+        <div class="tm-step hl"><span class="tm-step-num">2</span><div><div class="tm-step-name">✦ เปิดจอย — ระบบเชื่อมต่ออัตโนมัติ</div><div class="tm-step-desc">ไฟกระพริบแล้วเชื่อมต่อเอง ไม่ต้องตั้งค่าเพิ่ม</div></div></div>
+        <div class="tm-step"><span class="tm-step-num">3</span><div><div class="tm-step-name">เลือกเกมที่ชอบแล้วเริ่มเล่นได้ทันที</div><div class="tm-step-desc">เล่นได้ทั้งคนเดียวและเล่นคู่ 2 คน</div></div></div>
       </div>
       <div class="tm-note-box"><b>⚡ หมายเหตุ:</b> ใช้งานได้กับทีวีที่มีช่อง HDMI เท่านั้น แนะนำให้พักสายตาทุก 30-45 นาที โดยเฉพาะสำหรับเด็กเล็ก</div>
     </div>
 
     <div class="tm-section alt tm-reveal">
       <div class="tm-section-eyebrow">ข้อมูลสินค้า</div>
-      <h2 class="tm-section-title">สเปคสินค้า</h2>
+      <h2 class="tm-section-title">ในกล่องมีอะไรบ้าง</h2>
+      <p class="tm-section-sub">ดูครบก่อนตัดสินใจสั่งซื้อ</p>
+      <div class="tm-img-wrap"><img src="./assets/images/unboxing.jpg" alt="ในกล่อง Game Stick Lite มีอะไรบ้าง — ตัวเครื่อง จอยไร้สาย 2 ตัว สายชาร์จ สาย HDMI ตัวรับสัญญาณ คู่มือการใช้งาน"></div>
+      <h2 class="tm-section-title" style="margin-top:8px;">สเปคสินค้า</h2>
       <div class="tm-spec-table">
         <div class="tm-spec-row"><div class="tm-spec-label">แบรนด์</div><div class="tm-spec-value">Game Stick Lite (นำเข้าคัดสรรพิเศษ)</div></div>
         <div class="tm-spec-row"><div class="tm-spec-label">รุ่น</div><div class="tm-spec-value">Game Stick Lite 2.4G Wireless Controller Gamepad</div></div>
@@ -839,6 +872,7 @@ a { color: inherit; text-decoration: none; }
         <div class="tm-spec-row"><div class="tm-spec-label">วัสดุ</div><div class="tm-spec-value">พลาสติก ABS คุณภาพสูง คัดสรรนำเข้าพิเศษ</div></div>
         <div class="tm-spec-row"><div class="tm-spec-label">มาตรฐาน</div><div class="tm-spec-value">คัดสรรคุณภาพสูง ตรวจสอบก่อนจัดส่งทุกชิ้น</div></div>
       </div>
+      <div class="tm-img-wrap" style="margin-top:18px; margin-bottom:0;"><img src="./assets/images/compact-size.jpg" alt="Game Stick Lite เครื่องเล็ก พกง่าย — เทียบขนาดกับโทรศัพท์มือถือและรีโมททีวี"></div>
     </div>
 
     <div class="tm-section tm-reveal">
@@ -862,6 +896,7 @@ a { color: inherit; text-decoration: none; }
     <div class="tm-section tm-reveal">
       <div class="tm-section-eyebrow">ลูกค้าพูดว่าอย่างไร</div>
       <h2 class="tm-section-title">รีวิวจากลูกค้าจริง</h2>
+      <div class="tm-img-wrap"><img src="./assets/images/real-review.jpg" alt="ใช้งานจริงที่บ้าน — เห็นของจริง เล่นได้จริง มั่นใจมากขึ้น รีวิวจากลูกค้าจริง 5 ดาว"></div>
       <div class="tm-rev-summary">
         <span class="tm-rev-big">5.0</span>
         <span class="tm-rev-stars">★★★★★</span>
@@ -929,6 +964,12 @@ a { color: inherit; text-decoration: none; }
         <summary class="tm-faq-q">จัดส่งกี่วัน เก็บเงินปลายทาง (COD) ได้ไหม?</summary>
         <div class="tm-faq-a">จัดส่งประมาณ <b>2-4 วันทำการ</b>ทั่วประเทศไทย รองรับการชำระเงินแบบ<b>เก็บเงินปลายทาง (COD)</b> — ตรวจสอบสินค้าก่อนชำระเงินได้ ฟรีค่าจัดส่งทุกออเดอร์</div>
       </details>
+    </div>
+
+    <div class="tm-section alt tm-reveal" style="padding-bottom:8px;">
+      <div class="tm-section-eyebrow">มั่นใจได้ 100%</div>
+      <h2 class="tm-section-title">สั่งซื้อง่าย มั่นใจได้</h2>
+      <div class="tm-img-wrap" style="margin-bottom:0;"><img src="./assets/images/trust-closing.jpg" alt="สั่งซื้อง่าย มั่นใจได้ — พร้อมส่ง ใช้งานง่าย เหมาะเป็นของขวัญ บริการตอบแชท"></div>
     </div>
 
     <div class="tm-closing">
@@ -1626,7 +1667,7 @@ function onBuyClick() {
   }
   TikTokShopBuyPopup.open({
     name:          'Game Stick Lite เครื่องเล่นเกมย้อนยุค',
-    image:         'https://placehold.co/400x400/F2F8F4/0E9257?font=roboto&text=Game+Stick+Lite',
+    image:         './assets/images/full-set.jpg',
     basePrice:     999,
     originalPrice: 1699,
     sku:           'GAMESTICK-LITE'
@@ -1640,12 +1681,60 @@ function onBuyClick() {
   var lbImg = document.getElementById('tm-lightbox-img');
   function openLb(src, alt){ lbImg.src = src; lbImg.alt = alt || ''; lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
   function closeLb(){ lb.classList.remove('open'); lbImg.src = ''; document.body.style.overflow = ''; }
-  document.querySelectorAll('.tm-img-wrap img, .tts-hero-img, .tm-hero-full img').forEach(function(img){
+  document.querySelectorAll('.tm-img-wrap img, .tts-hero-img, .tm-hero-full img, .tm-proof-slide img').forEach(function(img){
     img.addEventListener('click', function(e){ e.stopPropagation(); openLb(this.src, this.alt); });
   });
   lb.addEventListener('click', closeLb);
   document.getElementById('tm-lightbox-close').addEventListener('click', function(e){ e.stopPropagation(); closeLb(); });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLb(); });
+})();
+
+/* Premium proof slider — crossfade tự động + dot + vuốt tay, không phải scroll-snap gallery */
+(function(){
+  var root = document.getElementById('tm-proof-slider');
+  if (!root) return;
+  var slides = Array.prototype.slice.call(root.querySelectorAll('.tm-proof-slide'));
+  var captions = [
+    'พี่น้องนอนเล่นเกมฟุตบอลด้วยกันวันหยุด',
+    'คุณพ่อและลูกชายเล่นเกมต่อสู้ด้วยกัน',
+    'พี่น้องเล่นเกมคลาสสิกด้วยกันที่บ้าน',
+    'เพื่อนๆ มารวมตัวเล่นเกมด้วยกัน',
+    'คุณพ่อและลูกชายเล่น Game Stick Lite ด้วยกัน'
+  ];
+  var captionEl = document.getElementById('tm-proof-caption-text');
+  var dotsWrap = document.getElementById('tm-proof-dots');
+  var idx = 0, timer = null;
+  slides.forEach(function(_, i){
+    var d = document.createElement('button');
+    d.type = 'button';
+    d.className = 'tm-proof-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'ภาพที่ ' + (i + 1));
+    d.addEventListener('click', function(){ go(i); restart(); });
+    dotsWrap.appendChild(d);
+  });
+  var dots = Array.prototype.slice.call(dotsWrap.querySelectorAll('.tm-proof-dot'));
+  function go(i){
+    idx = (i + slides.length) % slides.length;
+    slides.forEach(function(s, si){ s.classList.toggle('active', si === idx); });
+    dots.forEach(function(d, di){ d.classList.toggle('active', di === idx); });
+    if (captionEl) captionEl.textContent = captions[idx] || '';
+  }
+  function next(){ go(idx + 1); }
+  function prev(){ go(idx - 1); }
+  function restart(){ clearInterval(timer); timer = setInterval(next, 4500); }
+  var nextBtn = root.querySelector('.tm-proof-arrow.next');
+  var prevBtn = root.querySelector('.tm-proof-arrow.prev');
+  if (nextBtn) nextBtn.addEventListener('click', function(e){ e.stopPropagation(); next(); restart(); });
+  if (prevBtn) prevBtn.addEventListener('click', function(e){ e.stopPropagation(); prev(); restart(); });
+  var touchStartX = null;
+  root.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, { passive: true });
+  root.addEventListener('touchend', function(e){
+    if (touchStartX === null) return;
+    var dx = e.changedTouches[0].clientX - touchStartX;
+    if (Math.abs(dx) > 40) { if (dx < 0) { next(); } else { prev(); } restart(); }
+    touchStartX = null;
+  }, { passive: true });
+  restart();
 })();
 
 /* Nút "+ ติดตาม" — toggle trạng thái, chỉ để tăng cảm giác tương tác */

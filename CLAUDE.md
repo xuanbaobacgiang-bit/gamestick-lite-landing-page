@@ -24,8 +24,10 @@ Single file: `index.html`, clone bố cục từ `hezheng-landing-page` (giữ n
 
 - **CSS:** inline `<style>` — theme "tech sáng": nền trắng/xám nhạt-xanh (`--tm-ivory:#FFFFFF`, `--tm-cream:#F2F8F4`) + **xanh lá retro-gaming** làm điểm nhấn (`--tm-gold:#16C172` → `--tm-gold-dark:#0E9257`) — hue-shift từ bản HEZHENG gốc (xanh dương), giữ nguyên độ tương phản/độ sáng để đảm bảo dễ đọc. Font Kanit. **Cỡ chữ tăng so với bản HEZHENG gốc** (body 16px→18px, section-title 24px→26px, v.v.) theo yêu cầu — dễ đọc hơn cho khách 40-50 tuổi. Mobile-first 480px.
 - **Giá:** chỉ 1 mức giá duy nhất — **999 ฿** (giá gốc 1,699 ฿), KHÔNG có combo nhiều gói (khác HEZHENG có 2 gói 1/2 cái). Phần "chọn gói" trong HEZHENG đã được đơn giản hoá thành khối hiển thị giá tĩnh.
-- **JS:** inline `<script>` — reading-progress bar, scroll-reveal, countdown, buy popup (validate SĐT Thái `0\d{9}` hoặc `+66\d{9}`), lightbox ảnh, review filter, FAQ accordion. Logic giống hệt HEZHENG, chỉ bỏ phần "qty_pack options" trong `onBuyClick()` vì không có combo.
-- **Ảnh:** đang dùng **placehold.co tạm thời** (theo yêu cầu khách — "ảnh có thể sử dụng tạm ảnh khác, sẽ cập nhật sau"). KHÔNG dùng path local (`./assets/images/`) — sẽ vỡ trên Vercel.
+- **JS:** inline `<script>` — reading-progress bar, scroll-reveal, countdown, buy popup (validate SĐT Thái `0\d{9}` hoặc `+66\d{9}`), lightbox ảnh (zoom full ảnh khi bấm), review filter, FAQ accordion, premium proof-slider (crossfade tự động + dot + vuốt tay). Logic giống hệt HEZHENG, chỉ bỏ phần "qty_pack options" trong `onBuyClick()` vì không có combo.
+- **Ảnh:** 21 ảnh thật do khách cung cấp, đã nén JPEG q82 (`assets/images/*.jpg`, commit vào repo, KHÔNG dùng CDN ngoài — giống pattern HEZHENG, khác với repo Rejuvella gốc):
+  - 16 ảnh banner marketing có sẵn chữ Thái (hero, full-set, plug-play, family-fun, two-player, features-5, real-gameplay, ports-detail, controller-grip, games-variety, before-after, usage-steps, unboxing, compact-size, real-review, trust-closing) — mỗi ảnh gắn đúng 1 section nội dung tương ứng.
+  - 5 ảnh khách hàng thật đang chơi (`lifestyle-1..5.jpg`) — dùng trong slider cao cấp (crossfade + scale, dot indicator, vuốt tay, KHÔNG phải gallery scroll-snap thường) ở section "เล่นสนุกได้ทุกสถานการณ์".
 
 ## Các giá trị quan trọng hiện tại
 
@@ -67,8 +69,10 @@ Thái Lan (+7) bất kể timezone mặc định của Apps Script project.
 1. **Deploy webhook Apps Script** — mở Google Sheet → Extensions → Apps Script → dán `apps-script.gs`
    → chạy `setupHeaders` 1 lần → Deploy → Web app (Anyone can access) → copy URL `/exec` → dán vào
    `webhookUrl` trong `index.html` (đang để `null`).
-2. **Thay ảnh placeholder bằng ảnh thật** — 14 vị trí ảnh trong `index.html` đang dùng placehold.co,
-   grep `placehold.co` để tìm nhanh tất cả vị trí cần thay.
-3. **Connect Vercel** — repo chưa được connect để auto-deploy (theo yêu cầu, chưa cần làm ngay).
-4. Cân nhắc tách fanpage Facebook riêng nếu muốn tách hẳn khỏi các sản phẩm khác của Đại An (hiện đã
+2. **Connect Vercel** — repo chưa được connect để auto-deploy (theo yêu cầu, chưa cần làm ngay).
+3. Cân nhắc tách fanpage Facebook riêng nếu muốn tách hẳn khỏi các sản phẩm khác của Đại An (hiện đã
    dùng page riêng `61591467853514`, chỉ chung Pixel ID với HEZHENG/OSTMARS).
+
+✅ Đã xong: 21 ảnh thật đã gắn đúng vị trí, premium proof-slider (5 ảnh khách hàng thật), QA toàn diện
+qua preview browser (spacing, zoom ảnh, form validate, popup submit, FAQ, filter, slider — tất cả hoạt
+động đúng, không lỗi console, không tràn màn hình, không ảnh vỡ).

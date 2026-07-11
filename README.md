@@ -14,7 +14,8 @@ python3 -m http.server 8354 --directory .
 
 ```
 .
-├── index.html          # toàn bộ trang (HTML + CSS + JS inline), ảnh placeholder placehold.co
+├── index.html          # toàn bộ trang (HTML + CSS + JS inline)
+├── assets/images/       # 21 ảnh thật (16 banner marketing + 5 ảnh khách hàng thật cho proof-slider)
 ├── apps-script.gs       # Google Apps Script nhận đơn hàng — cần deploy thủ công (xem CLAUDE.md)
 ├── CLAUDE.md            # tài liệu chi tiết + việc còn thiếu
 └── README.md
@@ -22,8 +23,8 @@ python3 -m http.server 8354 --directory .
 
 ## Trước khi deploy
 
-Xem `CLAUDE.md` mục "Việc còn thiếu" — cần deploy webhook Apps Script, thay ảnh thật, và connect Vercel.
-`grep -n "placehold.co\|PLACEHOLDER" index.html`
+Xem `CLAUDE.md` mục "Việc còn thiếu" — chỉ còn thiếu deploy webhook Apps Script và connect Vercel.
+`grep -n "PLACEHOLDER" index.html`
 
 ## Deploy
 
