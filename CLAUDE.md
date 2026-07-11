@@ -34,8 +34,8 @@ Single file: `index.html`, clone bố cục từ `hezheng-landing-page` (giữ n
 | Mục | Giá trị |
 |---|---|
 | Facebook Pixel | `1602655537448756` (dùng chung với HEZHENG/OSTMARS — cùng khách Đại An) |
-| Facebook Page | `https://www.facebook.com/profile.php?id=61591467853514` (**khác** với HEZHENG/OSTMARS — page riêng cho Game Stick Lite) |
-| Messenger (chat) | `https://m.me/61591467853514` |
+| Facebook Page | `https://www.facebook.com/profile.php?id=61592070861027` (page riêng, tách hẳn khỏi HEZHENG/OSTMARS — đổi từ `61591467853514` ngày 2026-07-11) |
+| Messenger (chat) | `https://m.me/61592070861027` |
 | Giá | 999 ฿ (giá gốc 1,699 ฿) — chỉ 1 mức giá, không có combo |
 | Sự kiện Pixel | `PageView`, `ViewContent` (load trang), `InitiateCheckout` (bấm mua), `CompleteRegistration` (đặt hàng thành công) |
 | Google Sheet nhận đơn | `12NQHsLfe8MD47FK1dUVm0gxuyvOk6JA7DbR9LxRPb8Y` ("Đại An - Thailand") → tab **"Máy chơi game"** — 8 cột: Thời gian, Tên Khách, Số điện thoại, Địa chỉ, Lựa chọn của khách, Link landing page, Ghi chú, Nguồn chiến dịch. Thời gian ghi theo giờ Thái Lan (Asia/Bangkok, +7). |
@@ -66,8 +66,8 @@ Thái Lan (+7) bất kể timezone mặc định của Apps Script project.
 
 ## Việc còn thiếu trước khi chạy quảng cáo thật
 
-1. Cân nhắc tách fanpage Facebook riêng nếu muốn tách hẳn khỏi các sản phẩm khác của Đại An (hiện đã
-   dùng page riêng `61591467853514`, chỉ chung Pixel ID với HEZHENG/OSTMARS).
+Không còn việc bắt buộc nào. Fanpage đã tách riêng hẳn (`61592070861027`), chỉ còn chung Pixel ID
+với HEZHENG/OSTMARS (không ảnh hưởng vận hành).
 
 ✅ Đã xong toàn bộ: 21 ảnh thật đã gắn đúng vị trí, premium proof-slider (5 ảnh khách hàng thật), QA
 toàn diện qua preview browser (spacing, zoom ảnh, form validate, popup submit, FAQ, filter, slider —

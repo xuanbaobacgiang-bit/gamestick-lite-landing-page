@@ -7,27 +7,37 @@
   ============================================================
   LANDING PAGE — GAME STICK LITE (เครื่องเล่นเกมย้อนยุค HDMI ไร้สาย)
   ------------------------------------------------------------
-  Repo riêng, độc lập, clone bố cục từ hezheng-landing-page nhưng đổi
-  toàn bộ theme (xanh dương → xanh lá retro-gaming) + nội dung. Theme
-  "tech sáng": nền trắng/xám nhạt-xanh + xanh lá làm điểm nhấn. Toàn bộ
-  nội dung tiếng Thái. Cỡ chữ tăng so với bản gốc HEZHENG (dễ đọc hơn
-  cho khách 40-50 tuổi).
+  V2 — thiết kế lại hoàn toàn bố cục (giữ nguyên nội dung + toàn bộ
+  tính năng JS: buy popup, webhook, pixel, lightbox, proof-slider,
+  FAQ, review filter). Nền vẫn SÁNG (không dark theme) theo yêu cầu —
+  hợp với ảnh sản phẩm nền trắng. Điểm khác biệt là HỆ THỐNG BỐ CỤC:
 
-  Khách hàng nhấn mạnh: hàng NHẬP LOẠI XỊN, chất lượng cao — không phải
-  hàng trôi nổi kém chất lượng thường thấy trên thị trường. Nội dung
-  bên dưới cố tình nhấn USP "คุณภาพสูง/นำเข้าคัดสรรพิเศษ" thay vì phòng
-  thủ về lỗi/rủi ro chất lượng.
+  Bộ "vật liệu" thiết kế cố định dùng xuyên suốt (đồng bộ, không pha
+  trộn nhiều phong cách):
+    - 1 màu nhấn xanh lá (--tm-gold/--tm-gold-dark), nền thẻ cố định
+      --tm-card, bo góc theo cấp bậc cố định (ảnh 20px / thẻ 16px /
+      nút-badge 12px), 1 kiểu nút bo góc vuông (không dùng pill cho
+      nút hành động — pill chỉ dùng cho tag/chip nhỏ), 1 công thức
+      bóng đổ cho khối "nổi" (ticket giá, popup).
+  Bố cục THAY ĐỔI theo loại nội dung nhưng dùng chung vật liệu trên:
+    - Hero: ảnh trong khung bo góc + thẻ giá "nổi" đè mép dưới ảnh
+    - Vấn đề khách gặp: danh sách dạng thẻ có icon
+    - Công dụng: lưới bento (1 ô lớn + 3 ô nhỏ)
+    - Tính năng/công nghệ: hàng so le trái-phải (zigzag) + khung số
+    - Ưu điểm: bảng so sánh 2 cột
+    - Đối tượng phù hợp + Chính sách mua hàng: 2 mục MỚI bổ sung
+      (trước đây chưa có section riêng) dùng lưới bento / danh sách icon
+
+  Khách hàng nhấn mạnh: hàng NHẬP LOẠI XỊN, chất lượng cao. Nội dung
+  nhấn USP "คุณภาพสูง/นำเข้าคัดสรรพิเศษ" thay vì phòng thủ lỗi/rủi ro.
 
   Chỉ bán 1 mức giá: 999 ฿ (giá gốc 1,699 ฿) — không có combo nhiều gói.
 
-  Ảnh: 21 ảnh thật do khách cung cấp (16 banner marketing có sẵn chữ Thái +
-  5 ảnh khách hàng thật đang chơi) — assets/images/*.jpg, đã nén JPEG q82.
-  5 ảnh lifestyle dùng trong slider cao cấp (crossfade, không phải gallery
-  scroll-snap thường) ở section "เล่นสนุกได้ทุกสถานการณ์".
+  Ảnh: 21 ảnh thật (16 banner marketing có sẵn chữ Thái + 5 ảnh khách
+  hàng thật) — assets/images/*.jpg, đã nén JPEG q82.
 
-  Webhook đã deploy và test thành công (Apps Script project riêng, độc lập
-  "Game Stick Lite Thailand orders") — ghi vào tab "Máy chơi game" trong
-  sheet "Đại An - Thailand". Chỉ còn thiếu connect Vercel.
+  Webhook đã deploy, Vercel đã connect, domain live:
+  https://gamestick-lite-landing-page.vercel.app
   ============================================================
 -->
 
@@ -65,34 +75,28 @@ src="https://www.facebook.com/tr?id=1602655537448756&ev=PageView&noscript=1"/></
 
 <style>
 /* ==========================================================================
-   GAME STICK LITE — Design Tokens (theme "tech sáng": nền trắng/xám nhạt
-   + xanh lá retro-gaming làm điểm nhấn — hue-shift từ bản HEZHENG gốc,
-   giữ nguyên độ tương phản/độ sáng để đảm bảo dễ đọc — class/id giữ
-   nguyên để JS dùng chung)
+   GAME STICK LITE V2 — Design Tokens (nền sáng, 1 hệ vật liệu cố định:
+   màu, bo góc theo cấp bậc, 1 kiểu nút, 1 công thức bóng đổ — bố cục
+   thay đổi theo loại nội dung nhưng vật liệu luôn đồng nhất)
    ========================================================================== */
 :root {
-  --tm-gold:        #16C172;   /* xanh lá chủ đạo — icon, gradient, nhấn lớn */
-  --tm-gold-dark:   #0E9257;   /* xanh lá đậm — điểm kết gradient, CHỮ trên nền sáng */
-  --tm-gold-light:  #6EE7A8;   /* xanh lá sáng — CHỈ dùng cho chữ/nhấn trên nền tối */
-  --tm-ivory:       #FFFFFF;   /* nền chính */
-  --tm-cream:       #F2F8F4;   /* nền panel/card xen kẽ */
-  --tm-charcoal:    #0A1410;   /* khối tối duy nhất — nền hero, khối closing */
-  --tm-charcoal-2:  #12211A;
-  --tm-text:        #142019;
-  --tm-text-muted:  #62766C;
-  --tm-text-onDark: #FFFFFF;
-  --tm-border:      #DDE9E1;
-  --tm-border-soft: #EAF3EE;
-  --tm-r-sm:        4px;
-  --tm-r-md:        10px;
-  --tm-r-lg:        16px;
-  --tm-r-xl:        22px;
-  --tm-r-pill:      999px;
-  --tm-shadow-sm:   0 1px 3px rgba(16,24,40,0.06);
-  --tm-shadow-md:   0 8px 24px rgba(16,24,40,0.10);
-  --tm-shadow-gold: 0 0 0 1px rgba(22,193,114,0.16), 0 8px 22px rgba(22,193,114,0.24);
+  --tm-gold:        #16C172;
+  --tm-gold-dark:   #0E9257;
+  --tm-gold-light:  #6EE7A8;
+  --tm-ivory:       #FFFFFF;
+  --tm-cream:       #F7FAF8;   /* nền section xen kẽ */
+  --tm-card:        #F2F8F4;   /* nền thẻ/badge cố định */
+  --tm-text:        #16211A;
+  --tm-text-muted:  #5F726C;
+  --tm-border:      #E3ECE6;
+  --tm-border-soft: #EDF4EF;
+  --tm-r-badge:     12px;      /* nút, khung số thứ tự */
+  --tm-r-card:      16px;      /* thẻ nội dung */
+  --tm-r-img:       20px;      /* khung ảnh */
+  --tm-r-pill:      999px;     /* CHỈ dùng cho tag/chip nhỏ, không dùng cho nút hành động */
+  --tm-shadow-card:  0 8px 20px rgba(16,24,40,0.07);
+  --tm-shadow-float: 0 12px 30px rgba(16,24,40,0.16);
   --tm-container:   480px;
-  --tm-tabnav-height: 46px;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { -webkit-text-size-adjust: 100%; -webkit-tap-highlight-color: transparent; }
@@ -100,12 +104,12 @@ body {
   font-family: 'Kanit', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   font-size: 18px; line-height: 1.55;
   color: var(--tm-text);
-  background: #EDF4EF;
+  background: #EEF3F0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding-bottom: 84px;
 }
-h1, h2, h3, .tm-serif { font-family: 'Kanit', sans-serif; font-weight: 700; }
+h1, h2, h3 { font-family: 'Kanit', sans-serif; font-weight: 700; }
 img { max-width: 100%; display: block; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; }
 a { color: inherit; text-decoration: none; }
@@ -126,29 +130,27 @@ a { color: inherit; text-decoration: none; }
   .tts-page { border-radius: 18px; box-shadow: 0 12px 40px rgba(16,24,40,0.14); overflow: hidden; }
 }
 
-/* Top bar — thanh tiến trình đọc mảnh (reading progress) chạy dọc theo scroll */
+/* Reading progress */
 .tm-progress-track { position: sticky; top: 0; z-index: 51; height: 2px; background: var(--tm-border-soft); }
 .tm-progress-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%); transition: width 0.1s linear; }
 
-/* Brand mark row */
+/* Brand bar */
 .tm-brandbar {
   position: sticky; top: 2px; z-index: 50;
   display: flex; align-items: center; justify-content: space-between;
   padding: 10px 16px;
-  background: rgba(255,255,255,0.88); backdrop-filter: blur(6px);
+  background: rgba(255,255,255,0.92); backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--tm-border-soft);
 }
 .tm-brandmark { display: flex; align-items: center; gap: 8px; }
 .tm-brandmark-dot {
-  width: 32px; height: 32px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%);
+  width: 32px; height: 32px; border-radius: 10px;
+  background: var(--tm-gold-dark);
   display: flex; align-items: center; justify-content: center;
-  color: #FFFFFF; font-family: 'Kanit', sans-serif;
-  font-weight: 700; font-size: 17px;
+  color: #FFFFFF; font-weight: 700; font-size: 17px;
   flex-shrink: 0; overflow: hidden;
-  box-shadow: 0 0 12px rgba(22,193,114,0.35);
 }
-.tm-brandmark-dot img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.tm-brandmark-dot img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; }
 .tm-brandmark-text { display: flex; flex-direction: column; line-height: 1.25; }
 .tm-brandmark-name { font-size: 15.5px; font-weight: 700; color: var(--tm-text); }
 .tm-brandmark-sub { font-size: 13px; color: var(--tm-text-muted); letter-spacing: 0.3px; }
@@ -162,432 +164,336 @@ a { color: inherit; text-decoration: none; }
 }
 .tm-follow-btn.following { background: var(--tm-gold); color: #FFFFFF; border-color: var(--tm-gold); }
 
-/* Scroll reveal — chỉ áp dụng cho nội dung dưới màn hình đầu tiên */
 .tm-reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.6s ease, transform 0.6s ease; }
 .tm-reveal.in { opacity: 1; transform: translateY(0); }
 
-/* Hero Gallery (không dùng ở bản này nhưng giữ CSS để JS không lỗi nếu tái dùng) */
+/* Hero gallery (không dùng, giữ CSS để JS không lỗi nếu tái dùng) */
 .tts-hero { position: relative; width: 100%; aspect-ratio: 1/1; background: var(--tm-ivory); overflow: hidden; }
-.tts-hero-track {
-  display: flex; width: 100%; height: 100%;
-  scroll-snap-type: x mandatory; overflow-x: auto;
-  scrollbar-width: none; -ms-overflow-style: none;
-}
+.tts-hero-track { display: flex; width: 100%; height: 100%; scroll-snap-type: x mandatory; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
 .tts-hero-track::-webkit-scrollbar { display: none; }
 .tts-hero-slide { flex: 0 0 100%; width: 100%; height: 100%; scroll-snap-align: start; position: relative; }
 .tts-hero-img { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; }
-.tts-hero-arrow {
-  position: absolute; top: 50%; transform: translateY(-50%);
-  width: 30px; height: 30px; border-radius: 50%;
-  background: rgba(6,10,22,0.55);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 3; backdrop-filter: blur(2px);
-}
+.tts-hero-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 30px; height: 30px; border-radius: 50%; background: rgba(6,10,22,0.55); display: flex; align-items: center; justify-content: center; z-index: 3; }
 .tts-hero-arrow.prev { left: 8px; } .tts-hero-arrow.next { right: 8px; }
 .tts-hero-arrow svg { width: 18px; height: 18px; }
-.tts-hero-counter {
-  position: absolute; bottom: 12px; right: 12px;
-  padding: 3px 10px; background: rgba(6,10,22,0.6); color: var(--tm-text-onDark);
-  font-size: 13px; font-weight: 600; border-radius: var(--tm-r-pill); letter-spacing: 0.3px;
-}
+.tts-hero-counter { position: absolute; bottom: 12px; right: 12px; padding: 3px 10px; background: rgba(6,10,22,0.6); color: #fff; font-size: 13px; font-weight: 600; border-radius: var(--tm-r-pill); }
 
-/* Hero — 1 ảnh full-bleed, LUÔN hiển thị trọn vẹn (không object-fit:cover crop) */
-.tm-hero-full { position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden; background: var(--tm-charcoal); line-height: 0; }
-.tm-hero-full img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; }
+/* ===== HERO — ảnh trong khung bo góc + ticket giá nổi đè mép dưới ===== */
+.tm-hero-wrap { padding: 14px 14px 46px; position: relative; }
+.tm-hero-frame { position: relative; width: 100%; aspect-ratio: 1/1; overflow: hidden; border-radius: var(--tm-r-img); background: var(--tm-card); box-shadow: var(--tm-shadow-card); }
+.tm-hero-frame img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; }
 .tm-hero-eyebrow {
   position: absolute; top: 14px; left: 14px;
-  padding: 5px 12px; background: rgba(8,14,26,0.7); backdrop-filter: blur(4px);
-  border: 1px solid rgba(110,231,168,0.5);
-  border-radius: var(--tm-r-pill); font-size: 13px; font-weight: 700; letter-spacing: 0.4px; color: var(--tm-gold-light);
+  padding: 5px 12px; background: rgba(255,255,255,0.92); backdrop-filter: blur(4px);
+  border-radius: var(--tm-r-pill); font-size: 12.5px; font-weight: 700; letter-spacing: 0.3px; color: var(--tm-gold-dark);
+  box-shadow: 0 2px 8px rgba(16,24,40,0.1);
 }
-.tm-hero-pricetag {
-  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
-  padding: 8px 14px; background: rgba(22,193,114,0.07);
-  border: 1px solid rgba(22,193,114,0.3); border-radius: var(--tm-r-pill); margin-bottom: 14px;
+.tm-ticket {
+  position: absolute; left: 26px; right: 26px; bottom: 0; transform: translateY(50%);
+  background: var(--tm-ivory); border-radius: var(--tm-r-card);
+  padding: 14px 16px; box-shadow: var(--tm-shadow-float);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
 }
-.tm-hero-pricetag b { color: var(--tm-gold-dark); font-size: 20.5px; font-weight: 800; font-family: 'Kanit', sans-serif; }
-.tm-hero-pricetag .tm-price-old { font-size: 14.5px; color: var(--tm-text-muted); text-decoration: line-through; }
-.tm-hero-pricetag span { font-size: 14px; color: var(--tm-text-muted); }
+.tm-ticket-price-wrap { min-width: 0; }
+.tm-ticket-label { font-size: 11.5px; color: var(--tm-text-muted); letter-spacing: 0.3px; margin-bottom: 2px; }
+.tm-ticket-price-row { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.tm-ticket-price { font-size: 24px; font-weight: 800; color: var(--tm-gold-dark); font-family: 'Kanit', sans-serif; }
+.tm-ticket-old { font-size: 13.5px; color: var(--tm-text-muted); text-decoration: line-through; }
+.tm-ticket-countdown { display: flex; align-items: center; gap: 5px; margin-top: 4px; font-size: 12px; color: var(--tm-text-muted); }
 .tts-promo-countdown { display: inline-flex; align-items: center; }
 .tts-promo-countdown b {
-  display: inline-block; padding: 2px 7px;
-  background: var(--tm-charcoal); border-radius: 4px;
-  font-size: 15.5px; font-weight: 800;
-  font-variant-numeric: tabular-nums; letter-spacing: 0.5px; color: var(--tm-gold-light);
-  min-width: 78px; text-align: center;
+  display: inline-block; padding: 2px 7px; background: var(--tm-card); border-radius: 6px;
+  font-size: 12.5px; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: 0.3px; color: var(--tm-gold-dark);
+  min-width: 62px; text-align: center;
 }
+.tm-ticket-cta {
+  flex-shrink: 0; padding: 13px 18px; background: var(--tm-gold);
+  color: #FFFFFF; font-size: 15px; font-weight: 700; border-radius: var(--tm-r-badge);
+  white-space: nowrap;
+}
+.tm-ticket-cta:active { transform: translateY(1px); }
 
 /* Title block */
-.tm-titleblock { padding: 18px 16px 8px; background: var(--tm-cream); }
+.tm-titleblock { padding: 8px 16px 8px; }
 .tm-tag-new {
   display: inline-block; padding: 3px 10px; margin-bottom: 8px;
-  background: linear-gradient(90deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%); color: #FFFFFF;
+  background: var(--tm-card); color: var(--tm-gold-dark);
   font-size: 12.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
-  border-radius: var(--tm-r-sm);
+  border-radius: 6px;
 }
 .tm-title { font-size: 25px; font-weight: 700; color: var(--tm-text); line-height: 1.32; margin-bottom: 6px; }
 .tm-subtitle { font-size: 17px; color: var(--tm-text-muted); margin-bottom: 12px; line-height: 1.55; }
-.tm-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 15px; color: var(--tm-text-muted); padding-bottom: 14px; }
+.tm-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 15px; color: var(--tm-text-muted); padding-bottom: 8px; }
 .tm-meta-rating { display: inline-flex; align-items: center; gap: 4px; font-weight: 700; color: var(--tm-text); }
 .tm-meta-rating svg { width: 15px; height: 15px; fill: var(--tm-gold); }
 .tm-meta-divider { color: var(--tm-text-muted); opacity: 0.5; }
 
-/* Trust badges */
-.tm-trust-row {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
-  padding: 14px 16px 16px; background: var(--tm-cream);
-  border-top: 1px solid var(--tm-border-soft);
-}
-.tm-trust-chip {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 14.5px; font-weight: 600; color: var(--tm-text); letter-spacing: 0.1px;
-}
+/* Trust chips */
+.tm-trust-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 10px 16px 18px; }
+.tm-trust-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 14.5px; font-weight: 600; color: var(--tm-text); }
 .tm-trust-chip svg { width: 16px; height: 16px; color: var(--tm-gold-dark); flex-shrink: 0; }
-.tm-trust-chip:not(:last-child)::after {
-  content: ''; width: 3px; height: 3px; border-radius: 50%; background: var(--tm-border);
-  margin-left: 8px; display: inline-block;
-}
+.tm-trust-chip:not(:last-child)::after { content: ''; width: 3px; height: 3px; border-radius: 50%; background: var(--tm-border); margin-left: 8px; display: inline-block; }
 
-/* Retail teaser line (in hero section) */
-.tm-retail-teaser {
-  display: flex; align-items: center; gap: 6px;
-  padding: 10px 16px; background: var(--tm-ivory);
-  font-size: 15px; color: var(--tm-text); border-bottom: 1px solid var(--tm-border-soft);
-}
+.tm-retail-teaser { display: flex; align-items: center; gap: 6px; padding: 12px 16px; background: var(--tm-card); font-size: 15px; color: var(--tm-text); border-radius: var(--tm-r-card); margin: 0 16px 20px; }
 .tm-retail-teaser b { color: var(--tm-gold-dark); }
 
-/* Inline CTA row */
-.tm-inline-cta { display: flex; gap: 10px; padding: 14px 16px 18px; background: var(--tm-cream); }
+/* Inline CTA row — nút bo góc vuông (KHÔNG pill) */
+.tm-inline-cta { display: flex; gap: 10px; padding: 0 16px 22px; }
 .tm-btn {
   flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  padding: 13px 10px; font-size: 16px; font-weight: 700; border-radius: var(--tm-r-pill);
+  padding: 14px 10px; font-size: 16px; font-weight: 700; border-radius: var(--tm-r-badge);
   transition: filter 0.15s, transform 0.05s;
 }
 .tm-btn svg { width: 17px; height: 17px; flex-shrink: 0; }
-.tm-btn.outline { flex: 0.85; background: var(--tm-ivory); border: 1.5px solid var(--tm-gold); color: var(--tm-gold-dark); }
-.tm-btn.solid {
-  flex: 1.2; background: linear-gradient(90deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%);
-  color: #FFFFFF; box-shadow: var(--tm-shadow-gold);
-}
-.tm-btn:hover { filter: brightness(1.08); } .tm-btn:active { transform: translateY(1px); }
+.tm-btn.outline { flex: 0.85; background: var(--tm-card); color: var(--tm-gold-dark); }
+.tm-btn.solid { flex: 1.2; background: var(--tm-gold); color: #FFFFFF; }
+.tm-btn:hover { filter: brightness(1.06); } .tm-btn:active { transform: translateY(1px); }
 
-.tm-divider { height: 10px; background: #EDF4EF; }
+.tm-divider { height: 10px; background: #EEF3F0; }
 
 /* Section title */
 .tm-section { padding: 30px 16px; }
 .tm-section.alt { background: var(--tm-cream); }
-.tm-section-eyebrow {
-  font-size: 13.5px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--tm-gold-dark); text-align: center; margin-bottom: 6px;
-}
+.tm-section-eyebrow { font-size: 13.5px; font-weight: 700; letter-spacing: 1.2px; color: var(--tm-gold-dark); text-align: center; margin-bottom: 6px; }
 .tm-section-title { font-size: 26px; font-weight: 700; color: var(--tm-text); text-align: center; line-height: 1.32; margin-bottom: 8px; }
-.tm-section-sub { font-size: 17px; color: var(--tm-text-muted); text-align: center; margin-bottom: 20px; line-height: 1.55; }
+.tm-section-sub { font-size: 17px; color: var(--tm-text-muted); text-align: center; margin-bottom: 22px; line-height: 1.55; }
 
-/* Pain points — danh sách chữ thuần + gạch chân mảnh */
-.tm-pain-grid { display: flex; flex-direction: column; margin-bottom: 20px; }
-.tm-pain-chip {
-  display: flex; align-items: baseline; gap: 10px; padding: 13px 2px;
-  border-bottom: 1px solid var(--tm-border-soft);
-  font-size: 17px; font-weight: 600; color: var(--tm-text); line-height: 1.45;
-}
-.tm-pain-chip:first-child { padding-top: 2px; }
-.tm-pain-chip:last-child { border-bottom: none; }
-.tm-pain-chip::before {
-  content: ''; width: 5px; height: 5px; border-radius: 50%;
-  background: var(--tm-gold); flex-shrink: 0; align-self: center;
-  box-shadow: 0 0 6px rgba(22,193,114,0.5);
-}
+/* ===== Vấn đề khách gặp — danh sách thẻ có icon (không còn list gạch chân) ===== */
+.tm-problem-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+.tm-problem-row { display: flex; align-items: center; gap: 12px; padding: 13px 14px; background: var(--tm-card); border-radius: var(--tm-r-card); font-size: 16.5px; font-weight: 600; color: var(--tm-text); line-height: 1.4; }
+.tm-problem-icon { width: 30px; height: 30px; border-radius: 9px; background: #FCEBEB; color: #C23A3A; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.tm-problem-icon svg { width: 16px; height: 16px; }
 
-/* Feature / tech-spec grid */
-.tm-img-wrap { overflow: hidden; border-radius: var(--tm-r-lg); cursor: zoom-in; box-shadow: var(--tm-shadow-md); border: 1px solid var(--tm-border-soft); margin-bottom: 18px; }
+/* Khung ảnh chung */
+.tm-img-wrap { overflow: hidden; border-radius: var(--tm-r-img); cursor: zoom-in; box-shadow: var(--tm-shadow-card); margin-bottom: 18px; }
 .tm-img-wrap img { display: block; width: 100%; aspect-ratio: 1/1; object-fit: cover; transition: transform 0.35s ease; }
 .tm-img-wrap:hover img { transform: scale(1.04); }
-.tm-img-wrap:hover { box-shadow: 0 0 0 1px rgba(22,193,114,0.4), var(--tm-shadow-md); }
-/* Danh sách tính năng kiểu editorial (số thứ tự + hàng kẻ mảnh) */
-.tm-ing-list { display: flex; flex-direction: column; }
-.tm-ing-row { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid var(--tm-border-soft); }
-.tm-ing-row:first-child { padding-top: 2px; }
-.tm-ing-row:last-child { border-bottom: none; padding-bottom: 2px; }
-.tm-ing-num { font-family: 'Kanit', sans-serif; font-size: 29px; font-weight: 700; color: var(--tm-gold-dark); flex-shrink: 0; width: 36px; line-height: 1.1; }
-.tm-feat-name { font-size: 17.5px; font-weight: 700; color: var(--tm-text); margin-bottom: 4px; }
-.tm-feat-desc { font-size: 15.5px; color: var(--tm-text-muted); line-height: 1.5; }
 
-/* Texture / vật liệu attrs */
-.tm-spec-inline { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px 6px; padding-top: 6px; }
-.tm-spec-inline-item { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; letter-spacing: 0.6px; text-transform: uppercase; color: var(--tm-text); }
-.tm-spec-inline-item svg { width: 15px; height: 15px; color: var(--tm-gold-dark); flex-shrink: 0; }
-.tm-spec-inline-dot { color: var(--tm-gold); font-size: 10px; }
+/* ===== Bento grid — dùng cho "Công dụng" ===== */
+.tm-bento { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+.tm-bento-card { background: var(--tm-card); border-radius: var(--tm-r-card); padding: 16px; }
+.tm-bento-card.span2 { grid-column: span 2; }
+.tm-bento-title { font-size: 16.5px; font-weight: 700; color: var(--tm-text); margin-bottom: 4px; }
+.tm-bento-desc { font-size: 14.5px; color: var(--tm-text-muted); line-height: 1.5; }
+.tm-bento-desc b { color: var(--tm-gold-dark); }
 
-/* Công dụng — danh sách kiểu "tuyên ngôn thương hiệu" */
-.tm-benefit-list { display: flex; flex-direction: column; }
-.tm-benefit-row { padding: 18px 0; border-top: 1px solid var(--tm-border-soft); }
-.tm-benefit-row:first-child { border-top: none; padding-top: 0; }
-.tm-benefit-title {
-  font-family: 'Kanit', sans-serif; font-size: 21px; font-weight: 700;
-  color: var(--tm-text); margin-bottom: 6px; position: relative; padding-left: 22px;
-}
-.tm-benefit-title::before {
-  content: ''; position: absolute; left: 0; top: 11px; width: 14px; height: 1.5px; background: var(--tm-gold); box-shadow: 0 0 6px rgba(22,193,114,0.5);
-}
-.tm-benefit-desc { font-size: 16px; color: var(--tm-text-muted); line-height: 1.55; padding-left: 22px; }
-.tm-benefit-desc b { color: var(--tm-gold-dark); font-weight: 700; }
+/* ===== Zigzag — dùng cho tính năng/công nghệ đánh số ===== */
+.tm-zigzag { display: flex; flex-direction: column; gap: 18px; }
+.tm-zigzag-row { display: flex; align-items: center; gap: 14px; }
+.tm-zigzag-row.rev { flex-direction: row-reverse; text-align: right; }
+.tm-num-badge { width: 44px; height: 44px; border-radius: var(--tm-r-badge); background: var(--tm-gold); color: #FFFFFF; font-size: 17px; font-weight: 800; font-family: 'Kanit', sans-serif; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.tm-zigzag-name { font-size: 16.5px; font-weight: 700; color: var(--tm-text); margin-bottom: 2px; }
+.tm-zigzag-desc { font-size: 14.5px; color: var(--tm-text-muted); line-height: 1.45; }
 
-/* Ưu điểm — bảng so sánh 2 cột */
-.tm-compare { border: 1px solid var(--tm-border); border-radius: var(--tm-r-lg); overflow: hidden; background: var(--tm-cream); }
-.tm-compare-head { display: grid; grid-template-columns: 1fr 1fr; }
-.tm-compare-col-label { padding: 11px 8px; font-size: 13px; font-weight: 800; text-align: center; text-transform: uppercase; letter-spacing: 0.3px; }
-.tm-compare-col-label.muted { color: var(--tm-text-muted); background: var(--tm-ivory); }
-.tm-compare-col-label.gold { color: #FFFFFF; background: linear-gradient(90deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%); }
-.tm-compare-row { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--tm-border-soft); }
-.tm-compare-cell { display: flex; align-items: center; gap: 6px; padding: 12px 10px; font-size: 15px; line-height: 1.4; }
-.tm-compare-cell.muted { color: var(--tm-text-muted); }
-.tm-compare-cell.muted svg { width: 13px; height: 13px; color: #E23B5C; flex-shrink: 0; }
-.tm-compare-cell.gold { color: var(--tm-text); font-weight: 600; background: rgba(22,193,114,0.07); }
-.tm-compare-cell.gold svg { width: 13px; height: 13px; color: var(--tm-gold-dark); flex-shrink: 0; }
+/* Spec chips inline */
+.tm-spec-inline { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; padding-top: 4px; }
+.tm-spec-inline-item { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 700; color: var(--tm-gold-dark); background: var(--tm-card); padding: 7px 12px; border-radius: var(--tm-r-pill); }
+.tm-spec-inline-item svg { width: 14px; height: 14px; flex-shrink: 0; }
 
-/* Premium proof slider — crossfade + scale, khác hẳn kiểu scroll-snap gallery thông thường */
-.tm-proof-slider {
-  position: relative; aspect-ratio: 4/5; border-radius: var(--tm-r-lg); overflow: hidden;
-  box-shadow: var(--tm-shadow-md); border: 1px solid var(--tm-border-soft); background: var(--tm-charcoal);
-  touch-action: pan-y;
-}
-.tm-proof-slide {
-  position: absolute; inset: 0; opacity: 0; transform: scale(1.045); pointer-events: none;
-  transition: opacity 0.7s ease, transform 1.2s ease;
-}
+/* Premium proof slider */
+.tm-proof-slider { position: relative; aspect-ratio: 4/5; border-radius: var(--tm-r-img); overflow: hidden; box-shadow: var(--tm-shadow-card); background: var(--tm-card); touch-action: pan-y; }
+.tm-proof-slide { position: absolute; inset: 0; opacity: 0; transform: scale(1.045); pointer-events: none; transition: opacity 0.7s ease, transform 1.2s ease; }
 .tm-proof-slide.active { opacity: 1; transform: scale(1); pointer-events: auto; z-index: 1; }
 .tm-proof-slide img { width: 100%; height: 100%; object-fit: cover; display: block; cursor: zoom-in; }
-.tm-proof-caption {
-  position: absolute; left: 0; right: 0; bottom: 0; padding: 36px 16px 16px;
-  background: linear-gradient(180deg, transparent 0%, rgba(6,12,9,0.8) 100%);
-  color: #fff; font-size: 15.5px; font-weight: 600; display: flex; align-items: center; gap: 8px; z-index: 2;
-  pointer-events: none;
-}
-.tm-proof-badge {
-  display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px;
-  background: rgba(22,193,114,0.92); border-radius: var(--tm-r-pill);
-  font-size: 12px; font-weight: 800; letter-spacing: 0.3px; flex-shrink: 0;
-}
-.tm-proof-arrow {
-  position: absolute; top: 50%; transform: translateY(-50%); width: 38px; height: 38px; border-radius: 50%;
-  background: rgba(8,14,10,0.42); backdrop-filter: blur(3px); display: flex; align-items: center; justify-content: center; z-index: 3;
-  color: #fff;
-}
+.tm-proof-caption { position: absolute; left: 0; right: 0; bottom: 0; padding: 36px 16px 16px; background: linear-gradient(180deg, transparent 0%, rgba(6,12,9,0.78) 100%); color: #fff; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; z-index: 2; pointer-events: none; }
+.tm-proof-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; background: rgba(22,193,114,0.92); border-radius: var(--tm-r-pill); font-size: 11.5px; font-weight: 800; flex-shrink: 0; }
+.tm-proof-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; border-radius: 50%; background: rgba(8,14,10,0.4); display: flex; align-items: center; justify-content: center; z-index: 3; color: #fff; }
 .tm-proof-arrow.prev { left: 10px; } .tm-proof-arrow.next { right: 10px; }
-.tm-proof-arrow svg { width: 19px; height: 19px; }
+.tm-proof-arrow svg { width: 18px; height: 18px; }
 .tm-proof-dots { display: flex; justify-content: center; gap: 7px; margin-top: 14px; }
 .tm-proof-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--tm-border); transition: background 0.25s, width 0.25s; flex-shrink: 0; }
-.tm-proof-dot.active { width: 22px; border-radius: var(--tm-r-pill); background: var(--tm-gold); }
+.tm-proof-dot.active { width: 20px; border-radius: var(--tm-r-pill); background: var(--tm-gold); }
 
-/* Khối giá — hiển thị 1 mức giá duy nhất (không có combo nhiều gói) */
-.tm-cfg-display {
-  background: var(--tm-cream); border: 1.5px solid rgba(22,193,114,0.3); border-radius: var(--tm-r-lg);
-  padding: 22px 20px; text-align: center; box-shadow: var(--tm-shadow-gold);
-}
-.tm-cfg-price { font-family: 'Kanit', sans-serif; font-size: 36px; font-weight: 800; color: var(--tm-gold-dark); margin-bottom: 14px; letter-spacing: -0.5px; }
-.tm-cfg-price .tm-price-old { font-size: 17px; color: var(--tm-text-muted); text-decoration: line-through; font-weight: 600; margin-left: 6px; }
-.tm-cfg-gifts { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-bottom: 18px; }
-.tm-gift-item { display: flex; align-items: center; gap: 7px; font-size: 15.5px; color: var(--tm-text); }
+/* Compare table */
+.tm-compare { border-radius: var(--tm-r-card); overflow: hidden; background: var(--tm-card); box-shadow: var(--tm-shadow-card); }
+.tm-compare-head { display: grid; grid-template-columns: 1fr 1fr; }
+.tm-compare-col-label { padding: 11px 8px; font-size: 12.5px; font-weight: 800; text-align: center; text-transform: uppercase; }
+.tm-compare-col-label.muted { color: var(--tm-text-muted); background: var(--tm-ivory); }
+.tm-compare-col-label.gold { color: #FFFFFF; background: var(--tm-gold-dark); }
+.tm-compare-row { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--tm-border-soft); }
+.tm-compare-cell { display: flex; align-items: center; gap: 6px; padding: 12px 10px; font-size: 14.5px; line-height: 1.4; }
+.tm-compare-cell.muted { color: var(--tm-text-muted); background: var(--tm-ivory); }
+.tm-compare-cell.muted svg { width: 13px; height: 13px; color: #C23A3A; flex-shrink: 0; }
+.tm-compare-cell.gold { color: var(--tm-text); font-weight: 600; }
+.tm-compare-cell.gold svg { width: 13px; height: 13px; color: var(--tm-gold-dark); flex-shrink: 0; }
+
+/* ===== Đối tượng phù hợp — bento icon grid (MỚI) ===== */
+.tm-audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.tm-audience-card { background: var(--tm-card); border-radius: var(--tm-r-card); padding: 16px; }
+.tm-audience-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--tm-gold); color: #fff; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+.tm-audience-icon svg { width: 18px; height: 18px; }
+.tm-audience-title { font-size: 15.5px; font-weight: 700; color: var(--tm-text); margin-bottom: 3px; line-height: 1.3; }
+.tm-audience-desc { font-size: 13.5px; color: var(--tm-text-muted); line-height: 1.45; }
+
+/* ===== Chính sách mua hàng — danh sách icon (MỚI) ===== */
+.tm-policy-list { display: flex; flex-direction: column; gap: 2px; background: var(--tm-card); border-radius: var(--tm-r-card); overflow: hidden; }
+.tm-policy-row { display: flex; align-items: center; gap: 14px; padding: 15px 16px; border-bottom: 1px solid rgba(255,255,255,0.7); }
+.tm-policy-row:last-child { border-bottom: none; }
+.tm-policy-icon { width: 38px; height: 38px; border-radius: 10px; background: var(--tm-ivory); color: var(--tm-gold-dark); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.tm-policy-icon svg { width: 19px; height: 19px; }
+.tm-policy-text { font-size: 15.5px; font-weight: 600; color: var(--tm-text); line-height: 1.4; }
+.tm-policy-text span { display: block; font-size: 13.5px; font-weight: 400; color: var(--tm-text-muted); margin-top: 1px; }
+
+/* Ticket giá section (mota) — dùng lại pattern .tm-ticket nhưng đặt tĩnh trong section */
+.tm-price-ticket { background: var(--tm-card); border-radius: var(--tm-r-card); padding: 22px 20px; text-align: center; box-shadow: var(--tm-shadow-card); }
+.tm-price-ticket-value { font-size: 36px; font-weight: 800; color: var(--tm-gold-dark); font-family: 'Kanit', sans-serif; margin-bottom: 4px; }
+.tm-price-ticket-value .tm-ticket-old { font-size: 17px; margin-left: 6px; }
+.tm-price-ticket-note { font-size: 14.5px; color: var(--tm-text-muted); margin-bottom: 16px; }
+.tm-price-gifts { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-bottom: 18px; }
+.tm-gift-item { display: flex; align-items: center; gap: 7px; font-size: 15px; color: var(--tm-text); }
 .tm-gift-item svg { width: 15px; height: 15px; fill: var(--tm-gold-dark); flex-shrink: 0; }
-.tm-cfg-buy {
-  width: 100%; padding: 14px; border-radius: var(--tm-r-pill);
-  background: linear-gradient(90deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%);
-  color: #FFFFFF; font-weight: 700; font-size: 17px; box-shadow: var(--tm-shadow-gold);
-}
+.tm-price-buy { width: 100%; padding: 15px; border-radius: var(--tm-r-badge); background: var(--tm-gold); color: #FFFFFF; font-weight: 700; font-size: 17px; }
+.tm-price-buy:active { transform: translateY(1px); }
 
 /* Usage steps */
 .tm-steps { display: flex; flex-direction: column; gap: 8px; }
-.tm-step { display: flex; gap: 12px; align-items: center; padding: 12px 14px; background: var(--tm-cream); border-radius: var(--tm-r-md); border: 1px solid var(--tm-border-soft); }
-.tm-step.hl { background: linear-gradient(90deg, rgba(22,193,114,0.07) 0%, var(--tm-cream) 100%); border-color: rgba(22,193,114,0.35); }
-.tm-step-num { width: 31px; height: 31px; border-radius: 50%; background: var(--tm-ivory); color: var(--tm-text); font-size: 16px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.tm-step.hl .tm-step-num { background: linear-gradient(135deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%); color: #FFFFFF; }
-.tm-step-name { font-size: 17px; font-weight: 700; color: var(--tm-text); }
-.tm-step-desc { font-size: 15px; color: var(--tm-text-muted); margin-top: 2px; }
-.tm-note-box { margin-top: 14px; padding: 11px 13px; background: var(--tm-ivory); border-radius: var(--tm-r-md); border: 1px dashed rgba(22,193,114,0.35); font-size: 15.5px; color: var(--tm-text); text-align: center; line-height: 1.5; }
+.tm-step { display: flex; gap: 12px; align-items: center; padding: 13px 14px; background: var(--tm-card); border-radius: var(--tm-r-card); }
+.tm-step.hl { background: rgba(22,193,114,0.1); }
+.tm-step-num { width: 40px; height: 40px; border-radius: var(--tm-r-badge); background: var(--tm-ivory); color: var(--tm-text); font-size: 16px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.tm-step.hl .tm-step-num { background: var(--tm-gold); color: #FFFFFF; }
+.tm-step-name { font-size: 16.5px; font-weight: 700; color: var(--tm-text); }
+.tm-step-desc { font-size: 14.5px; color: var(--tm-text-muted); margin-top: 2px; }
+.tm-note-box { margin-top: 14px; padding: 12px 14px; background: var(--tm-cream); border-radius: var(--tm-r-card); font-size: 15px; color: var(--tm-text); text-align: center; line-height: 1.5; }
 .tm-note-box b { color: var(--tm-gold-dark); }
 
-/* Spec table */
-.tm-spec-table { background: var(--tm-cream); border: 1px solid var(--tm-border); border-radius: var(--tm-r-lg); overflow: hidden; }
-.tm-spec-row { display: flex; padding: 12px 14px; border-bottom: 1px dashed var(--tm-border); font-size: 16px; }
-.tm-spec-row:last-child { border-bottom: none; }
-.tm-spec-label { flex: 0 0 140px; font-weight: 700; color: var(--tm-text-muted); }
+/* Spec table — zebra rows thay vì viền chấm */
+.tm-spec-table { border-radius: var(--tm-r-card); overflow: hidden; box-shadow: var(--tm-shadow-card); }
+.tm-spec-row { display: flex; padding: 13px 16px; font-size: 15.5px; background: var(--tm-ivory); }
+.tm-spec-row:nth-child(even) { background: var(--tm-card); }
+.tm-spec-label { flex: 0 0 138px; font-weight: 700; color: var(--tm-text-muted); }
 .tm-spec-value { flex: 1; color: var(--tm-text); font-weight: 500; }
 
-/* Inline CTA block */
+/* CTA block giữa trang */
 .tm-cta-block { text-align: center; padding: 6px 0 4px; }
 .tm-cta-headline { font-size: 19.5px; font-weight: 700; color: var(--tm-text); margin-bottom: 6px; }
 .tm-cta-headline b { color: var(--tm-gold-dark); }
-.tm-cta-sub { font-size: 15px; color: var(--tm-text-muted); margin-bottom: 14px; }
-.tm-cta-btn {
-  display: inline-flex; align-items: center; gap: 6px; padding: 14px 34px;
-  background: linear-gradient(90deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%);
-  color: #FFFFFF; font-size: 17.5px; font-weight: 700; border-radius: var(--tm-r-pill); box-shadow: var(--tm-shadow-gold);
-}
-.tm-cta-btn svg { width: 19px; height: 19px; fill: #FFFFFF; }
+.tm-cta-sub { font-size: 15px; color: var(--tm-text-muted); margin-bottom: 16px; }
+.tm-cta-btn { display: inline-flex; align-items: center; gap: 6px; padding: 15px 32px; background: var(--tm-gold); color: #FFFFFF; font-size: 17px; font-weight: 700; border-radius: var(--tm-r-badge); }
+.tm-cta-btn svg { width: 18px; height: 18px; fill: #FFFFFF; }
 
 /* Reviews */
 .tm-rev-summary { display: flex; align-items: center; gap: 8px; justify-content: center; margin-bottom: 16px; }
 .tm-rev-big { font-size: 30px; font-weight: 800; color: var(--tm-gold-dark); font-family: 'Kanit', sans-serif; }
 .tm-rev-stars { color: var(--tm-gold); font-size: 17px; letter-spacing: 1px; }
-.tm-rev-count { font-size: 15px; color: var(--tm-text-muted); }
+.tm-rev-count { font-size: 14.5px; color: var(--tm-text-muted); }
 .tm-rev-filters { display: flex; gap: 8px; justify-content: center; margin-bottom: 16px; }
-.tm-rev-chip { padding: 6px 14px; border-radius: var(--tm-r-pill); border: 1px solid var(--tm-border); font-size: 15px; font-weight: 600; color: var(--tm-text-muted); }
-.tm-rev-chip.active { background: linear-gradient(90deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%); color: #FFFFFF; border-color: transparent; }
+.tm-rev-chip { padding: 6px 14px; border-radius: var(--tm-r-pill); background: var(--tm-card); font-size: 14.5px; font-weight: 600; color: var(--tm-text-muted); }
+.tm-rev-chip.active { background: var(--tm-gold-dark); color: #FFFFFF; }
 .tm-rev-list { display: flex; flex-direction: column; gap: 10px; }
-.tm-rev-card { padding: 14px; background: var(--tm-ivory); border-radius: var(--tm-r-md); border: 1px solid var(--tm-border-soft); }
+.tm-rev-card { padding: 14px; background: var(--tm-card); border-radius: var(--tm-r-card); }
 .tm-rev-head { display: flex; align-items: center; gap: 8px; }
-.tm-rev-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%); color: #FFFFFF; font-weight: 700; font-size: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.tm-rev-name { font-size: 16px; font-weight: 700; color: var(--tm-text); }
-.tm-rev-stars-sm { color: var(--tm-gold); font-size: 14px; letter-spacing: 1px; }
-.tm-rev-skin { margin-left: auto; font-size: 13px; background: rgba(22,193,114,0.1); color: var(--tm-gold-dark); padding: 2px 8px; border-radius: var(--tm-r-pill); font-weight: 700; }
-.tm-rev-content { font-size: 16px; color: var(--tm-text); line-height: 1.55; margin-top: 8px; }
-.tm-rev-meta { font-size: 14px; color: var(--tm-text-muted); margin-top: 8px; }
-.tm-rev-empty { text-align: center; font-size: 15.5px; color: var(--tm-text-muted); padding: 20px 0; }
+.tm-rev-avatar { width: 36px; height: 36px; border-radius: 10px; background: var(--tm-gold-dark); color: #FFFFFF; font-weight: 700; font-size: 15.5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.tm-rev-name { font-size: 15.5px; font-weight: 700; color: var(--tm-text); }
+.tm-rev-stars-sm { color: var(--tm-gold); font-size: 13px; letter-spacing: 1px; }
+.tm-rev-skin { margin-left: auto; font-size: 12.5px; background: var(--tm-ivory); color: var(--tm-gold-dark); padding: 2px 8px; border-radius: var(--tm-r-pill); font-weight: 700; }
+.tm-rev-content { font-size: 15.5px; color: var(--tm-text); line-height: 1.55; margin-top: 8px; }
+.tm-rev-meta { font-size: 13.5px; color: var(--tm-text-muted); margin-top: 8px; }
+.tm-rev-empty { text-align: center; font-size: 15px; color: var(--tm-text-muted); padding: 20px 0; }
 
 /* FAQ */
-.tm-faq-item { background: var(--tm-cream); border: 1px solid var(--tm-border-soft); border-radius: var(--tm-r-md); overflow: hidden; margin-bottom: 8px; }
-.tm-faq-item[open] { border-color: rgba(22,193,114,0.4); }
-.tm-faq-q { padding: 14px 16px; font-size: 17px; font-weight: 700; color: var(--tm-text); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.tm-faq-item { background: var(--tm-card); border-radius: var(--tm-r-card); overflow: hidden; margin-bottom: 8px; }
+.tm-faq-q { padding: 15px 16px; font-size: 16.5px; font-weight: 700; color: var(--tm-text); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
 .tm-faq-q::-webkit-details-marker { display: none; }
-.tm-faq-q::after { content: '+'; font-size: 23px; font-weight: 700; color: var(--tm-gold-dark); transition: transform 0.2s; flex-shrink: 0; }
+.tm-faq-q::after { content: '+'; font-size: 22px; font-weight: 700; color: var(--tm-gold-dark); transition: transform 0.2s; flex-shrink: 0; }
 .tm-faq-item[open] .tm-faq-q::after { transform: rotate(45deg); }
-.tm-faq-a { padding: 0 16px 14px; font-size: 16px; color: var(--tm-text-muted); line-height: 1.6; }
+.tm-faq-a { padding: 0 16px 15px; font-size: 15.5px; color: var(--tm-text-muted); line-height: 1.6; }
 .tm-faq-a b { color: var(--tm-gold-dark); font-weight: 700; }
 
-/* Closing CTA — khối TỐI duy nhất trên trang sáng, tạo điểm nhấn "chốt đơn" */
-.tm-closing { background: linear-gradient(160deg, var(--tm-charcoal) 0%, var(--tm-charcoal-2) 100%); padding: 32px 16px; text-align: center; }
-.tm-closing-title { font-size: 22.5px; font-weight: 700; color: #FFFFFF; margin-bottom: 6px; font-family: 'Kanit', sans-serif; }
-.tm-closing-title b { color: var(--tm-gold-light); }
-.tm-closing-sub { font-size: 16px; color: rgba(255,255,255,0.68); margin-bottom: 18px; }
-.tm-closing-btn {
-  display: inline-flex; align-items: center; gap: 6px; padding: 14px 30px;
-  background: linear-gradient(90deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%); color: #FFFFFF;
-  font-size: 17px; font-weight: 800; border-radius: var(--tm-r-pill);
-  box-shadow: 0 8px 26px rgba(22,193,114,0.4);
-}
-.tm-closing-btn svg { width: 18px; height: 18px; fill: #FFFFFF; }
+/* Closing CTA — khối màu xanh lá đặc (KHÔNG dark), điểm nhấn trước khi chốt đơn */
+.tm-closing { background: linear-gradient(160deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%); padding: 32px 16px; text-align: center; border-radius: var(--tm-r-img); margin: 0 16px 20px; }
+.tm-closing-title { font-size: 21.5px; font-weight: 700; color: #FFFFFF; margin-bottom: 6px; }
+.tm-closing-sub { font-size: 15px; color: rgba(255,255,255,0.85); margin-bottom: 18px; }
+.tm-closing-btn { display: inline-flex; align-items: center; gap: 6px; padding: 14px 28px; background: #FFFFFF; color: var(--tm-gold-dark); font-size: 16.5px; font-weight: 800; border-radius: var(--tm-r-badge); }
+.tm-closing-btn svg { width: 18px; height: 18px; fill: var(--tm-gold-dark); }
 
 /* Brand footer */
-.tm-brand-footer { padding: 26px 16px; text-align: center; background: var(--tm-ivory); }
-.tm-brand-footer-name { font-size: 23px; font-weight: 800; color: var(--tm-text); letter-spacing: 0.5px; margin-bottom: 6px; font-family: 'Kanit', sans-serif; }
-.tm-brand-footer-tag { font-size: 14px; font-weight: 700; color: var(--tm-gold-dark); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
-.tm-brand-footer-text { font-size: 16px; color: var(--tm-text-muted); line-height: 1.6; max-width: 380px; margin: 0 auto 14px; }
+.tm-brand-footer { padding: 24px 16px; text-align: center; }
+.tm-brand-footer-name { font-size: 22px; font-weight: 800; color: var(--tm-text); letter-spacing: 0.3px; margin-bottom: 6px; }
+.tm-brand-footer-tag { font-size: 13.5px; font-weight: 700; color: var(--tm-gold-dark); text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 12px; }
+.tm-brand-footer-text { font-size: 15px; color: var(--tm-text-muted); line-height: 1.6; max-width: 380px; margin: 0 auto 14px; }
 .tm-brand-certs { display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; }
-.tm-brand-cert { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; background: var(--tm-cream); border: 1px solid var(--tm-border); border-radius: var(--tm-r-pill); font-size: 14px; font-weight: 600; color: var(--tm-text-muted); }
-.tm-brand-cert svg { width: 13px; height: 13px; fill: var(--tm-gold-dark); }
+.tm-brand-cert { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; background: var(--tm-card); border-radius: var(--tm-r-pill); font-size: 13px; font-weight: 600; color: var(--tm-text-muted); }
+.tm-brand-cert svg { width: 12px; height: 12px; fill: var(--tm-gold-dark); }
 
 /* Legal footer */
 .tm-legal-footer { background: var(--tm-cream); padding: 18px 16px 22px; text-align: center; }
 .tm-legal-distrib { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--tm-border); }
-.tm-legal-label { font-size: 14px; color: var(--tm-text-muted); margin-bottom: 3px; }
-.tm-legal-company { font-size: 16px; font-weight: 800; color: var(--tm-text); }
+.tm-legal-label { font-size: 13.5px; color: var(--tm-text-muted); margin-bottom: 3px; }
+.tm-legal-company { font-size: 15.5px; font-weight: 800; color: var(--tm-text); }
 .tm-legal-links { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
-.tm-legal-link { font-size: 15px; color: var(--tm-gold-dark); font-weight: 700; }
-.tm-legal-link:hover { text-decoration: underline; }
-.tm-legal-sep { color: var(--tm-text-muted); font-size: 15px; }
-.tm-legal-copy { font-size: 14px; color: var(--tm-text-muted); line-height: 1.4; }
+.tm-legal-link { font-size: 14.5px; color: var(--tm-gold-dark); font-weight: 700; }
+.tm-legal-sep { color: var(--tm-text-muted); font-size: 14.5px; }
+.tm-legal-copy { font-size: 13.5px; color: var(--tm-text-muted); line-height: 1.4; }
 
-/* Sticky CTA */
+/* Sticky CTA — nút bo góc vuông */
 .tts-sticky-cta {
   position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
   width: 100%; max-width: var(--tm-container); z-index: 40;
-  background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border-top: 1px solid var(--tm-border);
+  background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-top: 1px solid var(--tm-border);
   padding: 10px 16px; display: flex; gap: 14px; align-items: center;
   box-shadow: 0 -4px 20px rgba(16,24,40,0.08); box-sizing: border-box;
 }
 @media (min-width: 768px) { .tts-sticky-cta { border-radius: 0 0 18px 18px; } }
 .tts-cta-sidegroup { display: flex; gap: 16px; padding-right: 8px; border-right: 1px solid var(--tm-border); }
 .tts-cta-side { display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 42px; color: var(--tm-text-muted); font-size: 12.5px; font-weight: 500; }
-.tts-cta-side:hover { color: var(--tm-gold-dark); }
 .tts-cta-side svg { width: 22px; height: 22px; fill: var(--tm-text-muted); }
-.tts-cta-side:hover svg { fill: var(--tm-gold-dark); }
 .tts-cta-buy { flex: 1; display: flex; gap: 10px; }
-.tts-btn-cart { flex: 1; padding: 12px 10px; background: var(--tm-ivory); border: 1.5px solid var(--tm-gold); color: var(--tm-gold-dark); font-size: 16px; font-weight: 700; border-radius: var(--tm-r-pill); white-space: nowrap; }
-.tts-btn-buy {
-  flex: 1.3; padding: 12px 14px; background: linear-gradient(90deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%);
-  color: #FFFFFF; font-size: 17px; font-weight: 800; border-radius: var(--tm-r-pill); box-shadow: var(--tm-shadow-gold); white-space: nowrap; letter-spacing: 0.3px;
-}
-.tts-btn-buy:hover { filter: brightness(1.08); }
+.tts-btn-cart { flex: 1; padding: 12px 10px; background: var(--tm-card); color: var(--tm-gold-dark); font-size: 15.5px; font-weight: 700; border-radius: var(--tm-r-badge); white-space: nowrap; }
+.tts-btn-buy { flex: 1.3; padding: 12px 14px; background: var(--tm-gold); color: #FFFFFF; font-size: 16.5px; font-weight: 800; border-radius: var(--tm-r-badge); white-space: nowrap; }
+.tts-btn-buy:active { transform: translateY(1px); }
 
-/* Buy popup — overlay/backdrop giữ tối (quy ước UI modal chuẩn, không phụ thuộc theme trang) */
-.tts-popup-overlay {
-  position: fixed; inset: 0; background: rgba(10,16,28,0.55); z-index: 100;
-  display: none; align-items: flex-end; justify-content: center; opacity: 0; transition: opacity 0.25s ease;
-}
+/* Buy popup */
+.tts-popup-overlay { position: fixed; inset: 0; background: rgba(10,16,28,0.55); z-index: 100; display: none; align-items: flex-end; justify-content: center; opacity: 0; transition: opacity 0.25s ease; }
 .tts-popup-overlay.open { display: flex; opacity: 1; }
-.tts-popup {
-  width: 100%; max-width: 480px; max-height: 90vh; background: var(--tm-ivory);
-  border-radius: var(--tm-r-xl) var(--tm-r-xl) 0 0; display: flex; flex-direction: column;
-  transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative; overflow: hidden; border: 1px solid var(--tm-border-soft);
-}
+.tts-popup { width: 100%; max-width: 480px; max-height: 90vh; background: var(--tm-ivory); border-radius: 22px 22px 0 0; display: flex; flex-direction: column; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
 .tts-popup-overlay.open .tts-popup { transform: translateY(0); }
-@media (min-width: 768px) { .tts-popup-overlay { align-items: center; } .tts-popup { border-radius: var(--tm-r-xl); max-height: 80vh; } }
+@media (min-width: 768px) { .tts-popup-overlay { align-items: center; } .tts-popup { border-radius: 22px; max-height: 80vh; } }
 .tts-popup-header { display: flex; gap: 12px; padding: 16px; border-bottom: 1px solid var(--tm-border-soft); }
-.tts-popup-img { width: 78px; height: 78px; border-radius: var(--tm-r-md); object-fit: cover; object-position: center 68%; flex-shrink: 0; background: var(--tm-cream); border: 1px solid var(--tm-border-soft); }
+.tts-popup-img { width: 76px; height: 76px; border-radius: var(--tm-r-card); object-fit: cover; object-position: center 68%; flex-shrink: 0; background: var(--tm-card); }
 .tts-popup-info { flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center; }
-.tts-popup-price { font-size: 24px; font-weight: 800; color: var(--tm-gold-dark); line-height: 1.2; }
-.tts-popup-price-old { font-size: 15px; color: var(--tm-text-muted); text-decoration: line-through; margin-top: 2px; }
-.tts-popup-stock { font-size: 15px; color: var(--tm-text-muted); margin-top: 4px; }
-.tts-popup-close { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: var(--tm-cream); z-index: 1; }
+.tts-popup-price { font-size: 23px; font-weight: 800; color: var(--tm-gold-dark); line-height: 1.2; }
+.tts-popup-price-old { font-size: 14.5px; color: var(--tm-text-muted); text-decoration: line-through; margin-top: 2px; }
+.tts-popup-stock { font-size: 14.5px; color: var(--tm-text-muted); margin-top: 4px; }
+.tts-popup-close { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; background: var(--tm-card); z-index: 1; }
 .tts-popup-close svg { width: 18px; height: 18px; fill: var(--tm-text-muted); }
 .tts-popup-body { flex: 1; overflow-y: auto; padding: 16px; }
 .tts-popup-section { margin-bottom: 16px; }
 .tts-popup-section:last-child { margin-bottom: 0; }
-.tts-popup-label { font-size: 16.5px; font-weight: 700; color: var(--tm-text); margin-bottom: 8px; display: flex; align-items: baseline; gap: 4px; flex-wrap: wrap; }
+.tts-popup-label { font-size: 16px; font-weight: 700; color: var(--tm-text); margin-bottom: 8px; display: flex; align-items: baseline; gap: 4px; flex-wrap: wrap; }
 .tts-popup-label .req { color: var(--tm-gold-dark); }
-.tts-popup-label-note { font-size: 14px; font-weight: 400; color: var(--tm-gold-dark); line-height: 1.4; }
 .tts-popup-options { display: flex; flex-direction: column; gap: 8px; }
-.tts-popup-option {
-  padding: 12px 14px; background: var(--tm-cream); border: 1px solid var(--tm-border-soft);
-  border-radius: var(--tm-r-md); font-size: 15.5px; color: var(--tm-text); text-align: left; width: 100%; position: relative;
-}
-@keyframes badge-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(22,193,114,0.45); }
-  50%       { box-shadow: 0 0 0 5px rgba(22,193,114,0); }
-}
-.tts-popup-option-badge {
-  position: absolute; top: 50%; right: 8px; transform: translateY(-50%); padding: 2px 8px;
-  background: var(--tm-gold-dark); color: #fff; font-size: 12.5px; font-weight: 800; border-radius: var(--tm-r-pill);
-  animation: badge-glow 1.8s ease-in-out infinite;
-}
-.tts-popup-option.selected { background: rgba(22,193,114,0.08); border-color: var(--tm-gold); color: var(--tm-gold-dark); font-weight: 700; }
-.tts-popup-input, .tts-popup-textarea {
-  width: 100%; padding: 10px 12px; border: 1px solid var(--tm-border); border-radius: var(--tm-r-md);
-  font-size: 16px; font-family: inherit; color: var(--tm-text); background: var(--tm-ivory); outline: none;
-}
-.tts-popup-input::placeholder, .tts-popup-textarea::placeholder { color: var(--tm-text-muted); }
+.tts-popup-option { padding: 12px 14px; background: var(--tm-card); border-radius: var(--tm-r-card); font-size: 15px; color: var(--tm-text); text-align: left; width: 100%; position: relative; }
+@keyframes badge-glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(22,193,114,0.45); } 50% { box-shadow: 0 0 0 5px rgba(22,193,114,0); } }
+.tts-popup-option-badge { position: absolute; top: 50%; right: 8px; transform: translateY(-50%); padding: 2px 8px; background: var(--tm-gold-dark); color: #fff; font-size: 12px; font-weight: 800; border-radius: var(--tm-r-pill); animation: badge-glow 1.8s ease-in-out infinite; }
+.tts-popup-option.selected { background: rgba(22,193,114,0.12); color: var(--tm-gold-dark); font-weight: 700; }
+.tts-popup-input, .tts-popup-textarea { width: 100%; padding: 12px 14px; border: 1.5px solid var(--tm-border); border-radius: var(--tm-r-card); font-size: 16px; font-family: inherit; color: var(--tm-text); background: var(--tm-ivory); outline: none; }
 .tts-popup-input:focus, .tts-popup-textarea:focus { border-color: var(--tm-gold); }
-.tts-popup-input.error, .tts-popup-textarea.error { border-color: #E23B5C; }
+.tts-popup-input.error, .tts-popup-textarea.error { border-color: #C23A3A; }
 .tts-popup-textarea { resize: vertical; min-height: 60px; }
-.tts-popup-error-msg { font-size: 14.5px; color: #E23B5C; margin-top: 4px; }
+.tts-popup-error-msg { font-size: 14px; color: #C23A3A; margin-top: 4px; }
 .tts-honeypot { position: absolute; left: -9999px; opacity: 0; pointer-events: none; }
-.tts-popup-footer { padding: 12px 16px; border-top: 1px solid var(--tm-border-soft); background: var(--tm-cream); }
+.tts-popup-footer { padding: 14px 16px; border-top: 1px solid var(--tm-border-soft); background: var(--tm-cream); }
 .tts-popup-total { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
-.tts-popup-total-label { font-size: 16px; color: var(--tm-text-muted); }
-.tts-popup-total-value { font-size: 22px; font-weight: 800; color: var(--tm-gold-dark); }
-.tts-popup-submit {
-  width: 100%; padding: 14px; background: linear-gradient(90deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%);
-  color: #FFFFFF; font-size: 18px; font-weight: 700; border-radius: var(--tm-r-pill); box-shadow: var(--tm-shadow-gold);
-}
-.tts-popup-submit:disabled { background: var(--tm-border); color: var(--tm-text-muted); box-shadow: none; }
+.tts-popup-total-label { font-size: 15.5px; color: var(--tm-text-muted); }
+.tts-popup-total-value { font-size: 21px; font-weight: 800; color: var(--tm-gold-dark); }
+.tts-popup-submit { width: 100%; padding: 15px; background: var(--tm-gold); color: #FFFFFF; font-size: 17.5px; font-weight: 700; border-radius: var(--tm-r-badge); }
+.tts-popup-submit:disabled { background: var(--tm-border); color: var(--tm-text-muted); }
 .tts-popup-success { padding: 32px 16px; text-align: center; }
-.tts-popup-success-icon { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(135deg, var(--tm-gold) 0%, var(--tm-gold-dark) 100%); color: #FFFFFF; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 32px; font-weight: 800; }
-.tts-popup-success-title { font-size: 20px; font-weight: 700; color: var(--tm-text); margin-bottom: 8px; }
-.tts-popup-success-msg { font-size: 16px; color: var(--tm-text-muted); margin-bottom: 16px; }
-.tts-popup-order-code { display: inline-block; padding: 8px 16px; background: var(--tm-cream); border-radius: var(--tm-r-md); font-family: 'SFMono-Regular', Consolas, monospace; font-size: 17px; font-weight: 700; color: var(--tm-gold-dark); letter-spacing: 1px; }
+.tts-popup-success-icon { width: 58px; height: 58px; border-radius: 16px; background: var(--tm-gold); color: #FFFFFF; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 30px; font-weight: 800; }
+.tts-popup-success-title { font-size: 19.5px; font-weight: 700; color: var(--tm-text); margin-bottom: 8px; }
+.tts-popup-success-msg { font-size: 15.5px; color: var(--tm-text-muted); margin-bottom: 16px; }
+.tts-popup-order-code { display: inline-block; padding: 8px 16px; background: var(--tm-card); border-radius: var(--tm-r-badge); font-family: 'SFMono-Regular', Consolas, monospace; font-size: 16.5px; font-weight: 700; color: var(--tm-gold-dark); letter-spacing: 1px; }
 
 /* Lightbox */
 #tm-lightbox { display: none; position: fixed; inset: 0; z-index: 9999; background: rgba(2,4,10,0.94); padding: 20px; align-items: center; justify-content: center; cursor: zoom-out; }
 #tm-lightbox.open { display: flex; }
-#tm-lightbox-img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 10px; box-shadow: 0 8px 40px rgba(0,0,0,0.5); pointer-events: none; }
+#tm-lightbox-img { max-width: 100%; max-height: 90vh; object-fit: contain; border-radius: 10px; pointer-events: none; }
 #tm-lightbox-close { position: absolute; top: 14px; right: 14px; width: 36px; height: 36px; background: rgba(255,255,255,0.15); border-radius: 50%; color: #fff; font-size: 26px; line-height: 1; display: flex; align-items: center; justify-content: center; }
 </style>
 </head>
 <body>
 <div class="tts-page">
 
-  <!-- ========== HEADER ZONE ========== -->
   <div class="tm-progress-track"><div class="tm-progress-bar" id="tm-progress-bar"></div></div>
   <div class="tm-brandbar">
     <div class="tm-brandmark">
@@ -601,20 +507,28 @@ a { color: inherit; text-decoration: none; }
   </div>
 
   <section id="tongquan">
-    <!-- Hero — 1 ảnh full-bleed, tiêu đề + giá lồng trên ảnh -->
-    <div class="tm-hero-full">
-      <img src="./assets/images/hero.jpg" alt="Game Stick Lite เครื่องเล่นเกมย้อนยุค เสียบ HDMI พร้อมจอยไร้สาย 2 อัน">
-      <span class="tm-hero-eyebrow">GAME STICK LITE · เล่นเกมย้อนยุคได้ทุกวัน</span>
+    <!-- HERO: ảnh trong khung bo góc + ticket giá nổi -->
+    <div class="tm-hero-wrap">
+      <div class="tm-hero-frame">
+        <img src="./assets/images/hero.jpg" alt="Game Stick Lite เครื่องเล่นเกมย้อนยุค เสียบ HDMI พร้อมจอยไร้สาย 2 อัน">
+        <span class="tm-hero-eyebrow">มาใหม่ · เล่นเกมย้อนยุคได้ทุกวัน</span>
+      </div>
+      <div class="tm-ticket">
+        <div class="tm-ticket-price-wrap">
+          <div class="tm-ticket-label">ราคาพิเศษวันนี้</div>
+          <div class="tm-ticket-price-row">
+            <span class="tm-ticket-price">999 ฿</span>
+            <span class="tm-ticket-old">1,699 ฿</span>
+          </div>
+          <div class="tm-ticket-countdown">เหลือ <span class="tts-promo-countdown" data-duration="86400"><b>23:59:59</b></span></div>
+        </div>
+        <button class="tm-ticket-cta" type="button" onclick="onBuyClick()">สั่งซื้อเลย</button>
+      </div>
     </div>
 
     <div class="tm-titleblock">
-      <span class="tm-tag-new">มาใหม่</span>
       <h1 class="tm-title">Game Stick Lite เครื่องเล่นเกมย้อนยุค เสียบ HDMI พร้อมจอยไร้สาย 2 อัน</h1>
       <p class="tm-subtitle">รวมเกมคลาสสิกหลายพันเกม · จอยไร้สาย 2.4G ระยะไกล 10 เมตร · เสียบ HDMI เล่นได้ทันที · ไม่ต้องติดตั้งอะไรเพิ่ม</p>
-      <div class="tm-hero-pricetag">
-        <b>999 ฿</b><span class="tm-price-old">1,699 ฿</span><span>/ ชิ้น · เหลือ</span>
-        <span class="tts-promo-countdown" data-duration="86400"><b>23:59:59</b></span>
-      </div>
       <div class="tm-meta">
         <span class="tm-meta-rating"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>5.0/5</span>
         <span class="tm-meta-divider">|</span>
@@ -636,7 +550,7 @@ a { color: inherit; text-decoration: none; }
     </div>
 
     <div class="tm-inline-cta">
-      <a class="tm-btn outline" href="https://m.me/61591467853514" target="_blank" rel="noopener">
+      <a class="tm-btn outline" href="https://m.me/61592070861027" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path fill="currentColor" d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
         แชทสอบถาม
       </a>
@@ -645,8 +559,9 @@ a { color: inherit; text-decoration: none; }
         สั่งซื้อเลย 999 ฿
       </button>
     </div>
-    <div style="padding:0 16px 20px; background:var(--tm-cream);">
-      <div class="tm-img-wrap" style="margin-bottom:0;"><img src="./assets/images/full-set.jpg" alt="Game Stick Lite พร้อมจอยไร้สาย 2 อัน — ครบเซ็ตพร้อมเล่น"></div>
+
+    <div class="tm-img-wrap" style="margin:0 16px 24px;">
+      <img src="./assets/images/full-set.jpg" alt="Game Stick Lite พร้อมจอยไร้สาย 2 อัน — ครบเซ็ตพร้อมเล่น">
     </div>
   </section>
 
@@ -659,113 +574,142 @@ a { color: inherit; text-decoration: none; }
       <div class="tm-section-eyebrow">ทำไมต้อง Game Stick Lite</div>
       <h2 class="tm-section-title">คุณกำลังเจอปัญหาเหล่านี้อยู่หรือเปล่า?</h2>
       <p class="tm-section-sub">ถ้าตอบใช่ 2 ข้อขึ้นไป — Game Stick Lite คือคำตอบสำหรับคุณ</p>
-      <div class="tm-pain-grid">
-        <div class="tm-pain-chip">อยากเล่นเกมย้อนยุคแบบวัยเด็ก แต่หาเครื่องเก่าไม่ได้แล้ว</div>
-        <div class="tm-pain-chip">เครื่องเกมทั่วไปในตลาดคุณภาพไม่นิ่ง เล่นกระตุกค้างบ่อย</div>
-        <div class="tm-pain-chip">อยากมีกิจกรรมสนุกๆ ทำร่วมกับครอบครัวที่บ้าน</div>
-        <div class="tm-pain-chip">ซื้อเครื่องเกมราคาแพง แต่ใช้งานไม่คุ้มค่า</div>
-        <div class="tm-pain-chip">ต่อสายติดตั้งเครื่องเกมยุ่งยาก เสียเวลานาน</div>
+      <div class="tm-problem-list">
+        <div class="tm-problem-row"><span class="tm-problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>อยากเล่นเกมย้อนยุคแบบวัยเด็ก แต่หาเครื่องเก่าไม่ได้แล้ว</div>
+        <div class="tm-problem-row"><span class="tm-problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>เครื่องเกมทั่วไปในตลาดคุณภาพไม่นิ่ง เล่นกระตุกค้างบ่อย</div>
+        <div class="tm-problem-row"><span class="tm-problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>อยากมีกิจกรรมสนุกๆ ทำร่วมกับครอบครัวที่บ้าน</div>
+        <div class="tm-problem-row"><span class="tm-problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>ซื้อเครื่องเกมราคาแพง แต่ใช้งานไม่คุ้มค่า</div>
+        <div class="tm-problem-row"><span class="tm-problem-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></span>ต่อสายติดตั้งเครื่องเกมยุ่งยาก เสียเวลานาน</div>
       </div>
       <div class="tm-img-wrap">
         <img src="./assets/images/plug-play.jpg" alt="เสียบทีวีแล้วเล่นได้เลย — Game Stick Lite ตอบโจทย์ทุกปัญหาข้างต้น">
       </div>
     </div>
 
-    <!-- Công dụng — trình bày kiểu "tuyên ngôn thương hiệu" -->
+    <!-- Công dụng — lưới bento -->
     <div class="tm-section alt tm-reveal">
       <div class="tm-section-eyebrow">ประโยชน์</div>
       <h2 class="tm-section-title">Game Stick Lite ให้อะไรกับคุณบ้าง?</h2>
       <p class="tm-section-sub">4 ประโยชน์หลักที่ได้รับทันทีตั้งแต่เสียบเครื่อง</p>
       <div class="tm-img-wrap"><img src="./assets/images/family-fun.jpg" alt="สนุกด้วยกันได้ทั้งบ้าน — เกมคลาสสิกที่ชวนทุกคนมาร่วมเล่น"></div>
-      <div class="tm-benefit-list">
-        <div class="tm-benefit-row">
-          <div class="tm-benefit-title">เสียบปุ๊บเล่นปั๊บ ไม่ต้องติดตั้งอะไรเพิ่ม</div>
-          <div class="tm-benefit-desc">เสียบเข้าช่อง HDMI ของทีวี <b>เริ่มเล่นได้ทันที</b> ไม่ต้องดาวน์โหลดหรือตั้งค่าซับซ้อน</div>
+      <div class="tm-bento">
+        <div class="tm-bento-card span2">
+          <div class="tm-bento-title">เสียบปุ๊บเล่นปั๊บ ไม่ต้องติดตั้งอะไรเพิ่ม</div>
+          <div class="tm-bento-desc">เสียบเข้าช่อง HDMI ของทีวี <b>เริ่มเล่นได้ทันที</b> ไม่ต้องดาวน์โหลดหรือตั้งค่าซับซ้อน</div>
         </div>
-        <div class="tm-benefit-row">
-          <div class="tm-benefit-title">รวมเกมคลาสสิกหลายพันเกมในเครื่องเดียว</div>
-          <div class="tm-benefit-desc">เกมย้อนยุคยอดนิยมครบครัน <b>เลือกเล่นได้ตามใจ</b> ไม่ต้องซื้อตลับเพิ่ม</div>
+        <div class="tm-bento-card">
+          <div class="tm-bento-title">รวมเกมคลาสสิกหลายพันเกม</div>
+          <div class="tm-bento-desc">เลือกเล่นได้ตามใจ ไม่ต้องซื้อตลับเพิ่ม</div>
         </div>
-        <div class="tm-benefit-row">
-          <div class="tm-benefit-title">เล่นได้พร้อมกัน 2 คน สนุกทั้งครอบครัว</div>
-          <div class="tm-benefit-desc">มาพร้อม <b>จอยไร้สาย 2.4G 2 อัน</b> ชวนคนในบ้านมาเล่นด้วยกันได้ทันที</div>
+        <div class="tm-bento-card">
+          <div class="tm-bento-title">เล่นพร้อมกัน 2 คน</div>
+          <div class="tm-bento-desc">มาพร้อม<b>จอยไร้สาย 2 อัน</b></div>
         </div>
-        <div class="tm-benefit-row">
-          <div class="tm-benefit-title">พกพาสะดวก ใช้ได้ทุกที่ที่มีทีวี</div>
-          <div class="tm-benefit-desc"><b>ขนาดเล็กพกพาง่าย</b> เสียบได้ทั้งที่บ้าน บ้านญาติ หรือพกไปเที่ยว</div>
+      </div>
+      <div class="tm-bento" style="margin-top:10px; margin-bottom:0;">
+        <div class="tm-bento-card span2">
+          <div class="tm-bento-title">พกพาสะดวก ใช้ได้ทุกที่ที่มีทีวี</div>
+          <div class="tm-bento-desc"><b>ขนาดเล็กพกพาง่าย</b> เสียบได้ทั้งที่บ้าน บ้านญาติ หรือพกไปเที่ยว</div>
         </div>
       </div>
       <div class="tm-img-wrap" style="margin-top:18px; margin-bottom:0;"><img src="./assets/images/two-player.jpg" alt="เล่น 2 คน ยิ่งสนุกกว่า — เหมาะกับเพื่อน คู่รัก และครอบครัว"></div>
     </div>
 
+    <!-- เหมาะกับใคร — MỚI -->
     <div class="tm-section tm-reveal">
+      <div class="tm-section-eyebrow">เหมาะกับใคร</div>
+      <h2 class="tm-section-title">Game Stick Lite เหมาะกับคุณไหม?</h2>
+      <p class="tm-section-sub">ออกแบบมาเพื่อทุกวัยที่อยากได้ความสนุกง่ายๆ ที่บ้าน</p>
+      <div class="tm-audience-grid">
+        <div class="tm-audience-card">
+          <div class="tm-audience-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20h5v-2a4 4 0 0 0-3-3.87M9 20H4v-2a4 4 0 0 1 3-3.87m5-9.13a4 4 0 1 1 0 8 4 4 0 0 1 0-8zm6 3a4 4 0 1 1-3 6.65M6 7a4 4 0 1 0 3 6.65"/></svg></div>
+          <div class="tm-audience-title">ครอบครัวมีลูกเล็ก</div>
+          <div class="tm-audience-desc">หากิจกรรมสนุกทำร่วมกันที่บ้านช่วงวันหยุด</div>
+        </div>
+        <div class="tm-audience-card">
+          <div class="tm-audience-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8v4l3 3M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"/></svg></div>
+          <div class="tm-audience-title">คนยุค 90</div>
+          <div class="tm-audience-desc">อยากหวนคืนความทรงจำวัยเด็กกับเกมคลาสสิก</div>
+        </div>
+        <div class="tm-audience-card">
+          <div class="tm-audience-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6M12 3v13m0-13l-4 4m4-4l4 4"/></svg></div>
+          <div class="tm-audience-title">มองหาของขวัญ</div>
+          <div class="tm-audience-desc">ให้ญาติผู้ใหญ่หรือหลานๆ ก็เหมาะ ราคาไม่แพง</div>
+        </div>
+        <div class="tm-audience-card">
+          <div class="tm-audience-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></div>
+          <div class="tm-audience-title">ไม่ถนัดเทคโนโลยี</div>
+          <div class="tm-audience-desc">เสียบปุ๊บเล่นได้เลย ไม่ต้องตั้งค่าซับซ้อน</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tính năng công nghệ — zigzag -->
+    <div class="tm-section alt tm-reveal">
       <div class="tm-section-eyebrow">เทคโนโลยีเด่น</div>
       <h2 class="tm-section-title">4 เทคโนโลยีหลักของ Game Stick Lite</h2>
       <p class="tm-section-sub">ออกแบบมาเพื่อประสบการณ์เล่นเกมย้อนยุคที่ลื่นไหลที่สุด</p>
       <div class="tm-img-wrap"><img src="./assets/images/features-5.jpg" alt="Game Stick Lite — ชิปประมวลผล จอยไร้สาย ความละเอียด HDMI 4K เกมในตัวหลายพันเกม"></div>
-      <div class="tm-ing-list">
-        <div class="tm-ing-row">
-          <span class="tm-ing-num">01</span>
-          <div><div class="tm-feat-name">ชิปประมวลผลคุณภาพสูง</div><div class="tm-feat-desc">เล่นลื่นไหล ไม่กระตุก ไม่ค้างระหว่างเล่น</div></div>
+      <div class="tm-zigzag">
+        <div class="tm-zigzag-row">
+          <span class="tm-num-badge">01</span>
+          <div><div class="tm-zigzag-name">ชิปประมวลผลคุณภาพสูง</div><div class="tm-zigzag-desc">เล่นลื่นไหล ไม่กระตุก ไม่ค้างระหว่างเล่น</div></div>
         </div>
-        <div class="tm-ing-row">
-          <span class="tm-ing-num">02</span>
-          <div><div class="tm-feat-name">จอยไร้สาย 2.4G ระยะไกล 10 เมตร</div><div class="tm-feat-desc">สัญญาณเสถียร นั่งเล่นห่างจอทีวีได้สบายๆ</div></div>
+        <div class="tm-zigzag-row rev">
+          <span class="tm-num-badge">02</span>
+          <div><div class="tm-zigzag-name">จอยไร้สาย 2.4G ระยะไกล 10 เมตร</div><div class="tm-zigzag-desc">สัญญาณเสถียร นั่งเล่นห่างจอทีวีได้สบายๆ</div></div>
         </div>
-        <div class="tm-ing-row">
-          <span class="tm-ing-num">03</span>
-          <div><div class="tm-feat-name">รองรับความละเอียดสูงสุด HDMI 4K</div><div class="tm-feat-desc">ภาพคมชัดบนทีวีจอใหญ่ ไม่ว่ารุ่นไหน</div></div>
+        <div class="tm-zigzag-row">
+          <span class="tm-num-badge">03</span>
+          <div><div class="tm-zigzag-name">รองรับความละเอียดสูงสุด HDMI 4K</div><div class="tm-zigzag-desc">ภาพคมชัดบนทีวีจอใหญ่ ไม่ว่ารุ่นไหน</div></div>
         </div>
-        <div class="tm-ing-row">
-          <span class="tm-ing-num">04</span>
-          <div><div class="tm-feat-name">รวมเกมคลาสสิกในตัวหลายพันเกม</div><div class="tm-feat-desc">พร้อมเล่นทันทีโดยไม่ต้องดาวน์โหลดเพิ่ม</div></div>
+        <div class="tm-zigzag-row rev">
+          <span class="tm-num-badge">04</span>
+          <div><div class="tm-zigzag-name">รวมเกมคลาสสิกในตัวหลายพันเกม</div><div class="tm-zigzag-desc">พร้อมเล่นทันทีโดยไม่ต้องดาวน์โหลดเพิ่ม</div></div>
         </div>
       </div>
       <div class="tm-img-wrap" style="margin-top:18px; margin-bottom:0;"><img src="./assets/images/real-gameplay.jpg" alt="ภาพเกมขึ้นจริง เล่นได้จริง — สัมผัสความสนุกแบบเกมคลาสสิกบนจอใหญ่"></div>
     </div>
 
-    <div class="tm-section alt tm-reveal">
+    <div class="tm-section tm-reveal">
       <div class="tm-section-eyebrow">เจาะลึกคุณภาพ</div>
       <h2 class="tm-section-title">ออกแบบคัดสรรวัสดุคุณภาพสูงจากภายใน</h2>
       <p class="tm-section-sub">นำเข้าคัดสรรพิเศษ ชิ้นส่วนภายในแข็งแรง ทนทาน ใช้งานได้ยาวนาน</p>
       <div class="tm-img-wrap"><img src="./assets/images/ports-detail.jpg" alt="พอร์ตเชื่อมต่อ Game Stick Lite — HDMI แข็งแรง คัดสรรคุณภาพสูง"></div>
-      <div class="tm-ing-list">
-        <div class="tm-ing-row">
-          <span class="tm-ing-num">01</span>
-          <div><div class="tm-feat-name">ชิปประมวลผลรุ่นใหม่</div><div class="tm-feat-desc">ประมวลผลเกมได้ลื่นไหล ไม่มีอาการหน่วงหรือหยุดชะงัก</div></div>
+      <div class="tm-zigzag">
+        <div class="tm-zigzag-row">
+          <span class="tm-num-badge">01</span>
+          <div><div class="tm-zigzag-name">ชิปประมวลผลรุ่นใหม่</div><div class="tm-zigzag-desc">ประมวลผลเกมได้ลื่นไหล ไม่มีอาการหน่วงหรือหยุดชะงัก</div></div>
         </div>
-        <div class="tm-ing-row">
-          <span class="tm-ing-num">02</span>
-          <div><div class="tm-feat-name">พอร์ต HDMI แข็งแรง</div><div class="tm-feat-desc">เสียบแน่น ไม่หลวมง่าย ใช้งานได้ต่อเนื่องยาวนาน</div></div>
+        <div class="tm-zigzag-row rev">
+          <span class="tm-num-badge">02</span>
+          <div><div class="tm-zigzag-name">พอร์ต HDMI แข็งแรง</div><div class="tm-zigzag-desc">เสียบแน่น ไม่หลวมง่าย ใช้งานได้ต่อเนื่องยาวนาน</div></div>
         </div>
-        <div class="tm-ing-row">
-          <span class="tm-ing-num">03</span>
-          <div><div class="tm-feat-name">ปุ่มเดียวเปิด-ปิด ใช้งานง่าย</div><div class="tm-feat-desc">ไม่ต้องตั้งค่าซับซ้อน เหมาะกับทุกวัย</div></div>
+        <div class="tm-zigzag-row">
+          <span class="tm-num-badge">03</span>
+          <div><div class="tm-zigzag-name">ปุ่มเดียวเปิด-ปิด ใช้งานง่าย</div><div class="tm-zigzag-desc">ไม่ต้องตั้งค่าซับซ้อน เหมาะกับทุกวัย</div></div>
         </div>
-        <div class="tm-ing-row">
-          <span class="tm-ing-num">04</span>
-          <div><div class="tm-feat-name">วัสดุตัวเครื่องและจอยคุณภาพสูง</div><div class="tm-feat-desc">ทนทานต่อการใช้งานบ่อย ไม่แตกหักง่าย</div></div>
+        <div class="tm-zigzag-row rev">
+          <span class="tm-num-badge">04</span>
+          <div><div class="tm-zigzag-name">วัสดุตัวเครื่องและจอยคุณภาพสูง</div><div class="tm-zigzag-desc">ทนทานต่อการใช้งานบ่อย ไม่แตกหักง่าย</div></div>
         </div>
       </div>
     </div>
 
-    <div class="tm-section tm-reveal">
+    <div class="tm-section alt tm-reveal">
       <div class="tm-section-eyebrow">สัมผัสการใช้งาน</div>
       <h2 class="tm-section-title">จอยคุณภาพสูง จับถนัดมือ เล่นได้นานไม่เมื่อย</h2>
       <p class="tm-section-sub">ออกแบบตามหลักสรีระ ปุ่มกดตอบสนองไว แม่นยำทุกจังหวะ</p>
       <div class="tm-img-wrap"><img src="./assets/images/controller-grip.jpg" alt="จอยไร้สาย Game Stick Lite คุณภาพสูง จับถนัดมือ"></div>
       <div class="tm-spec-inline">
-        <span class="tm-spec-inline-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>จอยไร้สาย 2.4G</span>
-        <span class="tm-spec-inline-dot">◆</span>
-        <span class="tm-spec-inline-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>รองรับ HDMI 4K</span>
-        <span class="tm-spec-inline-dot">◆</span>
-        <span class="tm-spec-inline-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>เสียบใช้งานได้ทันที</span>
-        <span class="tm-spec-inline-dot">◆</span>
-        <span class="tm-spec-inline-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>เล่นได้ 2 คนพร้อมกัน</span>
+        <span class="tm-spec-inline-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>จอยไร้สาย 2.4G</span>
+        <span class="tm-spec-inline-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>รองรับ HDMI 4K</span>
+        <span class="tm-spec-inline-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>เสียบใช้งานได้ทันที</span>
+        <span class="tm-spec-inline-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>เล่นได้ 2 คนพร้อมกัน</span>
       </div>
     </div>
 
-    <div class="tm-section alt tm-reveal">
+    <div class="tm-section tm-reveal">
       <div class="tm-section-eyebrow">ลูกค้าจริงใช้งานจริง</div>
       <h2 class="tm-section-title">เล่นสนุกได้ทุกสถานการณ์</h2>
       <p class="tm-section-sub">ภาพจากลูกค้าจริงที่ซื้อไปใช้งาน ไม่ใช่ภาพโปรโมชั่น</p>
@@ -782,8 +726,8 @@ a { color: inherit; text-decoration: none; }
       <div class="tm-proof-dots" id="tm-proof-dots"></div>
     </div>
 
-    <!-- Ưu điểm — bảng so sánh 2 cột -->
-    <div class="tm-section tm-reveal">
+    <!-- Ưu điểm — bảng so sánh -->
+    <div class="tm-section alt tm-reveal">
       <div class="tm-section-eyebrow">ข้อดี</div>
       <h2 class="tm-section-title">ทำไมต้องเลือก Game Stick Lite?</h2>
       <p class="tm-section-sub">เทียบกับเครื่องเล่นเกมย้อนยุคทั่วไปในท้องตลาด</p>
@@ -823,7 +767,7 @@ a { color: inherit; text-decoration: none; }
       <div class="tm-section-eyebrow">ความสนุกที่สัมผัสได้ทันที</div>
       <h2 class="tm-section-title">ก่อน &amp; หลัง มี Game Stick Lite</h2>
       <p class="tm-section-sub">จากบ้านเงียบเหงา สู่เสียงหัวเราะเต็มบ้านตั้งแต่เสียบเครื่องแรก</p>
-      <div class="tm-img-wrap">
+      <div class="tm-img-wrap" style="margin-bottom:0;">
         <img src="./assets/images/before-after.jpg" alt="เปรียบเทียบก่อนและหลังมี Game Stick Lite — ความทรงจำเดิมในรูปแบบที่ง่ายกว่า">
       </div>
     </div>
@@ -832,17 +776,41 @@ a { color: inherit; text-decoration: none; }
       <div class="tm-section-eyebrow">โปรโมชั่นวันนี้</div>
       <h2 class="tm-section-title">ราคาพิเศษวันนี้เท่านั้น</h2>
       <p class="tm-section-sub">ลดจากราคาปกติ จัดส่งฟรีทั่วประเทศ เก็บเงินปลายทางได้</p>
-      <div class="tm-cfg-display">
-        <div class="tm-cfg-price">999 ฿ <span class="tm-price-old">1,699 ฿</span></div>
-        <div class="tm-cfg-gifts">
+      <div class="tm-price-ticket">
+        <div class="tm-price-ticket-value">999 ฿ <span class="tm-ticket-old">1,699 ฿</span></div>
+        <div class="tm-price-gifts">
           <div class="tm-gift-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>จัดส่งฟรีทั่วไทย</div>
           <div class="tm-gift-item"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>แถมจอยไร้สาย 2 อัน พร้อมเล่น</div>
         </div>
-        <button class="tm-cfg-buy" type="button" onclick="onBuyClick()">สั่งซื้อเลย — 999 ฿</button>
+        <button class="tm-price-buy" type="button" onclick="onBuyClick()">สั่งซื้อเลย — 999 ฿</button>
       </div>
     </div>
 
+    <!-- นโยบายการสั่งซื้อ — MỚI -->
     <div class="tm-section tm-reveal">
+      <div class="tm-section-eyebrow">ความมั่นใจในการสั่งซื้อ</div>
+      <h2 class="tm-section-title">นโยบายการสั่งซื้อ</h2>
+      <div class="tm-policy-list">
+        <div class="tm-policy-row">
+          <span class="tm-policy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 1 3 6.7M3 12v5h5"/></svg></span>
+          <div class="tm-policy-text">รับประกันสินค้า 7 วัน<span>หากมีปัญหาจากการผลิต</span></div>
+        </div>
+        <div class="tm-policy-row">
+          <span class="tm-policy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+          <div class="tm-policy-text">จัดส่งฟรีทั่วประเทศไทย<span>ทุกออเดอร์ ไม่มีขั้นต่ำ</span></div>
+        </div>
+        <div class="tm-policy-row">
+          <span class="tm-policy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h13l4 4v8h-4M3 6v12h4M3 6l2-3h9l2 3M7 18a2 2 0 1 0 4 0 2 2 0 1 0-4 0zM15 18a2 2 0 1 0 4 0 2 2 0 1 0-4 0z"/></svg></span>
+          <div class="tm-policy-text">เก็บเงินปลายทาง (COD)<span>ตรวจสอบสินค้าก่อนชำระเงินได้</span></div>
+        </div>
+        <div class="tm-policy-row">
+          <span class="tm-policy-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg></span>
+          <div class="tm-policy-text">ยืนยันคำสั่งซื้อทางแชท<span>ภายใน 15 นาทีหลังสั่งซื้อ</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tm-section alt tm-reveal">
       <div class="tm-section-eyebrow">วิธีใช้งาน</div>
       <h2 class="tm-section-title">เริ่มเล่นง่ายใน 3 ขั้นตอน</h2>
       <p class="tm-section-sub">ไม่ต้องเก่งเทคโนโลยีก็ใช้งานได้ เสียบปุ๊บเล่นได้ทันที</p>
@@ -855,7 +823,7 @@ a { color: inherit; text-decoration: none; }
       <div class="tm-note-box"><b>⚡ หมายเหตุ:</b> ใช้งานได้กับทีวีที่มีช่อง HDMI เท่านั้น แนะนำให้พักสายตาทุก 30-45 นาที โดยเฉพาะสำหรับเด็กเล็ก</div>
     </div>
 
-    <div class="tm-section alt tm-reveal">
+    <div class="tm-section tm-reveal">
       <div class="tm-section-eyebrow">ข้อมูลสินค้า</div>
       <h2 class="tm-section-title">ในกล่องมีอะไรบ้าง</h2>
       <p class="tm-section-sub">ดูครบก่อนตัดสินใจสั่งซื้อ</p>
@@ -875,7 +843,7 @@ a { color: inherit; text-decoration: none; }
       <div class="tm-img-wrap" style="margin-top:18px; margin-bottom:0;"><img src="./assets/images/compact-size.jpg" alt="Game Stick Lite เครื่องเล็ก พกง่าย — เทียบขนาดกับโทรศัพท์มือถือและรีโมททีวี"></div>
     </div>
 
-    <div class="tm-section tm-reveal">
+    <div class="tm-section alt tm-reveal">
       <div class="tm-cta-block">
         <div class="tm-cta-headline">เสียบปุ๊บ เล่นปั๊บ — <b>ความสนุกแบบวัยเด็ก<wbr>กลับมาอีกครั้ง</b></div>
         <div class="tm-cta-sub">เริ่มต้นเพียง 999 ฿ · แถมจอยไร้สาย 2 อัน · ส่งฟรี · เก็บเงินปลายทาง</div>
@@ -966,7 +934,7 @@ a { color: inherit; text-decoration: none; }
       </details>
     </div>
 
-    <div class="tm-section alt tm-reveal" style="padding-bottom:8px;">
+    <div class="tm-section tm-reveal" style="padding-bottom:8px;">
       <div class="tm-section-eyebrow">มั่นใจได้ 100%</div>
       <h2 class="tm-section-title">สั่งซื้อง่าย มั่นใจได้</h2>
       <div class="tm-img-wrap" style="margin-bottom:0;"><img src="./assets/images/trust-closing.jpg" alt="สั่งซื้อง่าย มั่นใจได้ — พร้อมส่ง ใช้งานง่าย เหมาะเป็นของขวัญ บริการตอบแชท"></div>
@@ -975,7 +943,7 @@ a { color: inherit; text-decoration: none; }
     <div class="tm-closing">
       <div class="tm-closing-title">🎮 Game Stick Lite — <b>เริ่มต้น 999 ฿</b></div>
       <div class="tm-closing-sub">เล่นเกมย้อนยุคได้ทุกวัน · แถมจอยไร้สาย 2 อัน · ส่งฟรีทั่วไทย · เก็บเงินปลายทาง</div>
-      <a class="tm-closing-btn" href="https://m.me/61591467853514" target="_blank" rel="noopener">
+      <a class="tm-closing-btn" href="https://m.me/61592070861027" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
         แชท Game Stick Lite Thailand เพื่อสั่งซื้อ
       </a>
@@ -998,9 +966,9 @@ a { color: inherit; text-decoration: none; }
         <div class="tm-legal-company">Game Stick Lite Thailand</div>
       </div>
       <div class="tm-legal-links">
-        <a class="tm-legal-link" href="https://www.facebook.com/profile.php?id=61591467853514" target="_blank" rel="noopener">Facebook</a>
+        <a class="tm-legal-link" href="https://www.facebook.com/profile.php?id=61592070861027" target="_blank" rel="noopener">Facebook</a>
         <span class="tm-legal-sep">·</span>
-        <a class="tm-legal-link" href="https://m.me/61591467853514" target="_blank" rel="noopener">แชทสอบถาม</a>
+        <a class="tm-legal-link" href="https://m.me/61592070861027" target="_blank" rel="noopener">แชทสอบถาม</a>
       </div>
       <div class="tm-legal-copy">© 2026 Game Stick Lite Thailand · เครื่องเล่นเกมย้อนยุคคุณภาพนำเข้า</div>
     </div>
@@ -1012,10 +980,10 @@ a { color: inherit; text-decoration: none; }
 <!-- ========== STICKY CTA ========== -->
 <div class="tts-sticky-cta">
   <div class="tts-cta-sidegroup">
-    <a class="tts-cta-side" href="https://m.me/61591467853514" target="_blank" rel="noopener">
+    <a class="tts-cta-side" href="https://m.me/61592070861027" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>แชท
     </a>
-    <a class="tts-cta-side" href="https://www.facebook.com/profile.php?id=61591467853514" target="_blank" rel="noopener">
+    <a class="tts-cta-side" href="https://www.facebook.com/profile.php?id=61592070861027" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2z"/></svg>ร้านค้า
     </a>
   </div>
@@ -1681,7 +1649,7 @@ function onBuyClick() {
   var lbImg = document.getElementById('tm-lightbox-img');
   function openLb(src, alt){ lbImg.src = src; lbImg.alt = alt || ''; lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
   function closeLb(){ lb.classList.remove('open'); lbImg.src = ''; document.body.style.overflow = ''; }
-  document.querySelectorAll('.tm-img-wrap img, .tts-hero-img, .tm-hero-full img, .tm-proof-slide img').forEach(function(img){
+  document.querySelectorAll('.tm-img-wrap img, .tts-hero-img, .tm-hero-frame img, .tm-proof-slide img').forEach(function(img){
     img.addEventListener('click', function(e){ e.stopPropagation(); openLb(this.src, this.alt); });
   });
   lb.addEventListener('click', closeLb);
