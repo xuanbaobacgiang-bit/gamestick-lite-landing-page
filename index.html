@@ -213,8 +213,9 @@ a { color: inherit; text-decoration: none; }
 }
 .tm-ticket-cta:active { transform: translateY(1px); }
 
-/* Title block */
-.tm-titleblock { padding: 8px 16px 8px; }
+/* Title block — padding-top đủ lớn để chừa chỗ cho .tm-ticket nổi đè xuống
+   (ticket cao ~112px, translateY(50%) lồi xuống 56px dưới mép .tm-hero-wrap) */
+.tm-titleblock { padding: 80px 16px 8px; }
 .tm-tag-new {
   display: inline-block; padding: 3px 10px; margin-bottom: 8px;
   background: var(--tm-card); color: var(--tm-gold-dark);
