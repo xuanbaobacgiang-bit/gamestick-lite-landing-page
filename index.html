@@ -60,6 +60,7 @@ t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 fbq('init', '1602655537448756');
+fbq('init', '983614717242270');
 fbq('track', 'PageView');
 fbq('track', 'ViewContent', {
   content_ids:  ['GAMESTICK-LITE'],
@@ -70,7 +71,9 @@ fbq('track', 'ViewContent', {
 });
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=1602655537448756&ev=PageView&noscript=1"/></noscript>
+src="https://www.facebook.com/tr?id=1602655537448756&ev=PageView&noscript=1"/>
+<img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=983614717242270&ev=PageView&noscript=1"/></noscript>
 <!-- End Meta Pixel Code -->
 
 <style>
@@ -1116,7 +1119,11 @@ function reinitPixelMatching() {
       hasData = true;
     }
   }
-  if (hasData) { try { fbq('init', '1602655537448756', data); } catch(e){} }
+  if (hasData) {
+    ['1602655537448756', '983614717242270'].forEach(function(id){
+      try { fbq('init', id, data); } catch(e){}
+    });
+  }
 }
 
 /* ============================================================
