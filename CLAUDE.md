@@ -34,7 +34,7 @@ Single file: `index.html`, clone bố cục từ `hezheng-landing-page` (giữ n
 
 | Mục | Giá trị |
 |---|---|
-| Facebook Pixel | `1602655537448756` (dùng chung với HEZHENG/OSTMARS — cùng khách Đại An) |
+| Facebook Pixel | `1602655537448756`, `983614717242270`, `1678579384014167` |
 | Facebook Page | `https://www.facebook.com/profile.php?id=61592070861027` (page riêng, tách hẳn khỏi HEZHENG/OSTMARS — đổi từ `61591467853514` ngày 2026-07-11) |
 | Messenger (chat) | `https://m.me/61592070861027` |
 | Giá | 999 ฿ (giá gốc 1,699 ฿) — chỉ 1 mức giá, không có combo |
@@ -67,8 +67,9 @@ Thái Lan (+7) bất kể timezone mặc định của Apps Script project.
 
 ## Việc còn thiếu trước khi chạy quảng cáo thật
 
-Không còn việc bắt buộc nào. Fanpage đã tách riêng hẳn (`61592070861027`), chỉ còn chung Pixel ID
-với HEZHENG/OSTMARS (không ảnh hưởng vận hành).
+Không còn việc bắt buộc nào. Fanpage đã tách riêng hẳn (`61592070861027`). Trang hiện khởi tạo
+3 Pixel ID: `1602655537448756`, `983614717242270`, `1678579384014167`. Advanced Matching (tên/SĐT)
+chỉ áp dụng cho 2 Pixel cũ `1602655537448756` và `983614717242270`.
 
 ✅ Đã xong toàn bộ: 21 ảnh thật đã gắn đúng vị trí, premium proof-slider (5 ảnh khách hàng thật), QA
 toàn diện qua preview browser (spacing, zoom ảnh, form validate, popup submit, FAQ, filter, slider —
